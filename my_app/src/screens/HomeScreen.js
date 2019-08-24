@@ -1,11 +1,12 @@
 import React from "react";
-import { Text, StyleSheet, View, Button } from "react-native";
+import { Text, View, Button } from "react-native";
+import styles from "../components/StyleSheet.js";
 
 const HomeScreen = (props) => {
   const nav = props.navigation;
   return (
-  <View>
-    <Text style={styles.text}>Hello!</Text>
+  <View style={styles.view}>
+    <Text style={styles.header}>Hello!</Text>
     <Button 
       title="Your Message Center"
       onPress={() => nav.navigate("Messages")}
@@ -29,11 +30,5 @@ const HomeScreen = (props) => {
   </View>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
-  }
-});
 
 export default HomeScreen;

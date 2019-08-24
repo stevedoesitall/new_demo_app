@@ -1,18 +1,13 @@
 import React from "react";
-import { Text, StyleSheet, View, Button } from "react-native";
+import { Text, View, Button } from "react-native";
+import styles from "../components/StyleSheet.js";
 
 const MessageScreen = () => {
   return (
-  <View>
-    <Text style={styles.text}>Your Message Center</Text>
+  <View style={styles.view}>
+    <Text style={styles.header}>Your Message Center</Text>
   </View>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
-  }
-});
 
 export default MessageScreen;

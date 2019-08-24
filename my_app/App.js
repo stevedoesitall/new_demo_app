@@ -18,7 +18,7 @@ const navigator = createStackNavigator(
     Messages: MessageScreen
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Login",
     defaultNavigationOptions: {
       title: "App"
     }

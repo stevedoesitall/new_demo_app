@@ -1,18 +1,13 @@
 import React from "react";
-import { Text, StyleSheet, View, Button } from "react-native";
+import { Text, View, Button } from "react-native";
+import styles from "../components/StyleSheet.js";
 
 const PreferenceScreen = () => {
   return (
-  <View>
-    <Text style={styles.text}>Your Preference Center</Text>
+  <View style={styles.view}>
+    <Text style={styles.header}>Your Preference Center</Text>
   </View>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
-  }
-});
 
 export default PreferenceScreen;

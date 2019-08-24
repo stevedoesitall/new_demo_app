@@ -1,18 +1,14 @@
 import React from "react";
-import { Text, StyleSheet, View, Button } from "react-native";
+import { Text, View, Button } from "react-native";
 
 const PurchaseScreen = () => {
   return (
-  <View>
-    <Text style={styles.text}>Add or Buy</Text>
+  <View style={styles.view}>
+    <Text style={styles.header}>Add or Buy</Text>
   </View>
   );
 };
 
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
-  }
-});
+import styles from "../components/StyleSheet.js";
 
 export default PurchaseScreen;
