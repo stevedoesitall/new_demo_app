@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Text, View, Button, TextInput } from "react-native";
 import styles from "../components/StyleSheet.js";
-
+import { Base64 } from "js-base64";
+ 
 const LoginScreen = (props) => {
   const nav = props.navigation;
 
@@ -28,15 +29,23 @@ const LoginScreen = (props) => {
   );
 };
 
-const testingMode = false;
+const prodMode = false;
 
-if (testingMode == true) {
+getUserKeys = (email) => {
+  const userEmail = email;
+  const userId = Base64.encode(email).substring(3,11).toUpperCase();
+  // Carnival.setUserEmail(email);
+  // Carnival.setUserId(userId);
+};
+
+if (prodMode == true) {
   emailValidator = (nav, e) => {
     if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e))) {
+      getUserKeys(e);
       nav.navigate("Home");
     }
     else {
-      alert("You must provide a valid email address.")
+      alert("You must provide a valid email address."); //Note: Add error styling
       return false;
     }
   };
@@ -46,6 +55,5 @@ else {
     nav.navigate("Home");
   }
 };
-//Add ternary for a non sailthru.com email after hitting the email button. Hook to an error CSS class
 
 export default LoginScreen;
