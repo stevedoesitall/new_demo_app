@@ -23,7 +23,7 @@ const PurchaseScreen = () => {
       <PurchaseDetails 
         title={itemDetails.title}
         image={itemDetails.image}
-        price={itemDetails.vars.basePrice}
+        price={(itemDetails.vars.basePrice * qty).toFixed(2)}
       />
       <View style={styles.buttonRow}>
         <Text style={styles.label}>Qty: {qty}</Text>

@@ -29,7 +29,7 @@ const LoginScreen = (props) => {
   );
 };
 
-const prodMode = true;
+const prodMode = false;
 
 getUserKeys = (email) => {
   const userEmail = email;
