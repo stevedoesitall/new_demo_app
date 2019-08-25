@@ -29,11 +29,12 @@ const LoginScreen = (props) => {
   );
 };
 
-const prodMode = false;
+const prodMode = true;
 
 getUserKeys = (email) => {
   const userEmail = email;
   const userId = Base64.encode(email).substring(3,11).toUpperCase();
+  // alert(`${userEmail}, ${userId}`);
   // Carnival.setUserEmail(email);
   // Carnival.setUserId(userId);
 };
