@@ -11,7 +11,7 @@ const EventScreen = () => {
     {value: 3, name: "Average"},
     {value: 2, name: "Below Average"},
     {value: 1, name: "Poor"}
-  ]
+  ];
 
   return (
   <View style={styles.view}>

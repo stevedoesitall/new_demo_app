@@ -10,14 +10,31 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 30
     },
+    image: {
+        height: 250,
+        width: 350,
+        marginBottom: 15
+    },  
     input: {
         margin: 10,
         borderColor: "black",
         borderWidth: 1,
         alignSelf: "stretch"
     },
-    rec: {
-        fontSize: 20
+    subhead: {
+        fontSize: 20,
+        alignSelf: "center"
+    },
+    buttonRow: {
+        flexDirection: "row",
+        marginLeft: 20
+    },
+    label: {
+        marginTop: 10,
+        fontSize: 18
+    },
+    qtyBtn: {
+        fontSize: 30
     }
 });
 
