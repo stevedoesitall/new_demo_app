@@ -79,7 +79,7 @@ addToCart = (qty) => {
 
 purchase = (qty) => {
   purchaseDetails(qty);
-  const logType = "purchase";
+  const logType = "logPurchase";
   alert(`${itemDetails.price}, ${logType}`);
 };
 
