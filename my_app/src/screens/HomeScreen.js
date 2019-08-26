@@ -31,4 +31,14 @@ const HomeScreen = (props) => {
   );
 };
 
+// const getDeviceId = () => {
+//   Carnival.getDeviceID().then(function(deviceID) {
+//     // Handle device ID
+//   }, function(error){
+//       // Handle error
+//   });
+// };
+
+// getDeviceId();
+
 export default HomeScreen;
