@@ -56,12 +56,15 @@ const PreferenceScreen = () => {
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Your Preference Center</Text>
+    <Text style={styles.subhead}>Hit the Switch to {currentSwitchValue ? "Unsubscribe" : "Subscribe"}</Text>
+    
     <Switch
       style={styles.switcher}
       onValueChange={() => alertSwitch(currentSwitchValue)}
       value={currentSwitchValue}
     />
     <Text style={preferencesStyle}>How Often?</Text>
+
     <Picker
       style={pickerStyle}
       selectedValue={currentPickerValue}
