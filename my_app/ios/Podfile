@@ -29,6 +29,7 @@ target 'my_app' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+
   target 'my_appTests' do
     inherit! :search_paths
     # Pods for testing

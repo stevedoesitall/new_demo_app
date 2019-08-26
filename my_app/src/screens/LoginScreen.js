@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, Button, TextInput } from "react-native";
 import styles from "../components/StyleSheet.js";
+import getDate from "../components/DateGenerator.js";
 import { Base64 } from "js-base64";
  
 const LoginScreen = (props) => {
@@ -31,30 +32,37 @@ const LoginScreen = (props) => {
 
 const prodMode = false;
 
-getUserKeys = (email) => {
+const getUserKeys = (email) => {
   const userEmail = email;
-  const userId = Base64.encode(email).substring(3,11).toUpperCase();
-  // alert(`${userEmail}, ${userId}`);
-  // Carnival.setUserEmail(email);
+  const userId = Base64.encode(email.toLowerCase()).substring(3,11).toUpperCase();
+  const lastAppLoginDate = getDate();
+  const profileVars = {
+    "last_app_login_date" : lastAppLoginDate
+  };
+
+  alert(`You are logged in. Your user ID is: ${userId}`);
+
+  // Carnival.setUserEmail(userEmail);
   // Carnival.setUserId(userId);
+  // Carnival.setProfileVars(profileVars).then(result => {
+  //   // Handle success
+  // }).catch(e => {
+  //   // Handle error
+  // });
+
 };
 
-if (prodMode == true) {
-  emailValidator = (nav, e) => {
-    if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e))) {
-      getUserKeys(e);
-      nav.navigate("Home");
-    }
-    else {
-      alert("You must provide a valid email address."); //Note: Add error styling
+const emailValidator = (nav, email) => {
+  if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+    getUserKeys(email);
+  }
+  else {
+    alert("You must provide a valid email address."); //Note: Add error styling
+    if (prodMode == true) {
       return false;
     }
-  };
-}
-else {
-  emailValidator = (nav) => {
-    nav.navigate("Home");
   }
+  nav.navigate("Home");
 };
 
 export default LoginScreen;

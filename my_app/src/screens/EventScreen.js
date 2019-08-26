@@ -34,10 +34,10 @@ const EventScreen = () => {
   );
 };
 
-triggerEvent = (e) => {
+triggerEvent = (rating) => {
   const eventName = "AppRated";
   const eventVars = {};
-  eventVars["rating"] = e.value;
+  eventVars["rating"] = rating.value;
   
   alert(`${eventName} ${eventVars.rating}`);
 };

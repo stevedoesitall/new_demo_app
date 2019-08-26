@@ -31,8 +31,8 @@ const PurchaseScreen = () => {
           style={styles.qtyBtn}
           title="+"
           onPress={() => {
-            if (qty == 10) {
-              alert("You can only buy 10!");
+            if (qty == 9) {
+              alert("You can only buy 9!");
               return false;
             }
             else {

@@ -33,6 +33,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 18
     },
+    pickerStylesVisible: {
+        height: 50,
+        width: 100
+    },
+    pickerStylesHidden: {
+          height: 0,
+          width: 0
+    },
     qtyBtn: {
         fontSize: 30
     }
