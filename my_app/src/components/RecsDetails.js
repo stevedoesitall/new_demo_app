@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Button } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 const PurchaseDetails = (props) => {
@@ -12,7 +12,7 @@ const PurchaseDetails = (props) => {
         <View style={styles.view}>
             <Text style={styles.header}>{title}</Text>
             <Image
-                style={styles.purchaseImage}
+                style={styles.image}
                 source={image}/>
             <Text style={styles.subhead}>${price / 100}</Text>
         </View>

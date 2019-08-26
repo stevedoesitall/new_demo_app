@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, Button } from "react-native";
 import styles from "../components/StyleSheet.js";
-import PurchaseDetails from "../components/PurchaseDetails";
+import PurchaseDetails from "../components/PurchaseDetails.js";
 
 const itemDetails = {
   title: "Black Chelsea Boots",

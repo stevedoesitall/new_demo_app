@@ -8,9 +8,10 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 30,
-        marginBottom: 20
+        marginBottom: 20,
+        fontWeight: "900"
     },
-    image: {
+    purchaseImage: {
         height: 250,
         width: 350,
         marginBottom: 15
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 20,
         alignSelf: "center",
-        fontWeight: "bold",
+        fontWeight: "600",
     },
     buttonRow: {
         flexDirection: "row",
@@ -54,9 +55,16 @@ const styles = StyleSheet.create({
     qtyBtn: {
         fontSize: 30
     },
-    recs: {
+    recImage: {
+        height: 200,
+        width: 350,
+        marginBottom: 10
+    },  
+    recTitle: {
+        marginBottom: 5,
         marginTop: 15,
-        fontSize: 18,
+        fontSize: 20,
+        fontWeight: "900",
         alignSelf: "center"
     },
     switcher: {
