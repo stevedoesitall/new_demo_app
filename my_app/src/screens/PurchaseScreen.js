@@ -67,17 +67,17 @@ const PurchaseScreen = () => {
   );
 };
 
-purchaseDetails = (qty) => {
+const purchaseDetails = (qty) => {
   itemDetails.price = itemDetails.vars.basePrice * qty;
 };
 
-addToCart = (qty) => {
+const addToCart = (qty) => {
   purchaseDetails(qty);
   const logType = "logAbandonedCart";
   alert(`${itemDetails.price}, ${logType}`);
 };
 
-purchase = (qty) => {
+const purchase = (qty) => {
   purchaseDetails(qty);
   const logType = "logPurchase";
   alert(`${itemDetails.price}, ${logType}`);

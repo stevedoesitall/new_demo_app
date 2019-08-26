@@ -4,7 +4,7 @@ import styles from "../components/StyleSheet.js";
 
 const PreferenceScreen = () => {
 
-  //Use either Sailthru vars or device attributes to autopopulate useState and the attrMap
+  // Use either Sailthru vars or device attributes to autopopulate useState and the attrMap
   const [currentSwitchValue, switchValueToggle] = useState(true);
   const [currentPickerValue, pickerValueToggle] = useState("daily");
 
@@ -20,9 +20,9 @@ const PreferenceScreen = () => {
 
     attrMap.push_subscribed = !currentSwitchValue;
 
-    alert(`${attrMap.push_subscribed ? "You've been subscribed to push alerts." : "You are now unsubscribed from push alerts."}`);
+    alert(`${attrMap.push_subscribed ? "You are now subscribed to push alerts." : "You are now unsubscribed from push alerts."}`);
 
-    // attrMap.setString("push_subscribed", value);
+    // attrMap.setBoolean("push_subscribed", value);
     // Carnival.setAttributes(attrMap).catch(e => {
       // Handle error
     // });
@@ -30,11 +30,11 @@ const PreferenceScreen = () => {
   };
 
   const updatePrefs = (value) => {
-    attrMap.alert_prefs = value;
-
-    alert(`Your preferences have been updated to ${attrMap.alert_prefs} notifications!`);
-    pickerValueToggle(value);
-
+    if (value != attrMap.alert_prefs) {
+      attrMap.alert_prefs = value;
+      alert(`Your preferences have been updated to ${attrMap.alert_prefs} notifications!`);
+      pickerValueToggle(value);
+    }
     // attrMap.setString("alert_preferences", value);
     // Carnival.setAttributes(attrMap).catch(e => {
       // Handle error
@@ -42,21 +42,26 @@ const PreferenceScreen = () => {
   };
 
   let pickerStyle;
+  let preferencesStyle;
 
   if (currentSwitchValue == true) {
     pickerStyle = styles.pickerStylesVisible;
+    preferencesStyle = styles.preferencesStyleVisible;
   }
   else {
     pickerStyle = styles.pickerStylesHidden;
+    preferencesStyle = styles.preferencesStyleHidden
   };
 
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Your Preference Center</Text>
     <Switch
+      style={styles.switcher}
       onValueChange={() => alertSwitch(currentSwitchValue)}
       value={currentSwitchValue}
     />
+    <Text style={preferencesStyle}>How Often?</Text>
     <Picker
       style={pickerStyle}
       selectedValue={currentPickerValue}

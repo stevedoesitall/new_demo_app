@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, FlatList } from "react-native";
 import styles from "../components/StyleSheet.js";
-import { FlatList } from "react-native-gesture-handler";
 
 const EventScreen = () => {
 
@@ -34,12 +33,12 @@ const EventScreen = () => {
   );
 };
 
-triggerEvent = (rating) => {
+const triggerEvent = (rating) => {
   const eventName = "AppRated";
   const eventVars = {};
   eventVars["rating"] = rating.value;
   
-  alert(`${eventName} ${eventVars.rating}`);
+  alert(`Event: ${eventName}, Value: ${eventVars.rating}`);
 };
 
 export default EventScreen;
