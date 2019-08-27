@@ -11,7 +11,7 @@ const LoginScreen = (props) => {
 
   return (
     <View style={styles.view}>
-    <Text style={styles.header}>Enter Your Email:</Text>
+    <Text style={styles.header}>Enter Your Email</Text>
 
     <TextInput 
       placeholder="email@example.com"
