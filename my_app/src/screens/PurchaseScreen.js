@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Text, View, Button, FlatList, Image } from "react-native";
+import { Text, View, Button, FlatList, Image, BackHandler } from "react-native";
 import styles from "../components/StyleSheet.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
-
-let currentCart = [];
 
 const PurchaseScreen = () => {
 
 const [currentCartLength, cartLengthTicker] = useState(0);
 const [currentCartValue, cartValueTicker] = useState(0);
+
 let newCartValue = 0;
+let currentCart = [];
 
   const addToCart = (item) => {
     if (currentCart.length > 0) {
@@ -38,28 +38,24 @@ let newCartValue = 0;
   };
 
   const removeFromCart = (item) => {
-    if (currentCart.includes(item)) {
-      for (let pos = 0; pos < currentCart.length; pos++) {
-        const newCart = [];
-        currentCart.forEach(cartItem => {
-          if (cartItem != item) {
-            newCart.push(item);
-          }
-          else {
-            newCartValue = newCartValue - (item.vars.basePrice * item.qty);
-            cartValueTicker(newCartValue);
-          }
-        });
-        currentCart = newCart;
-        cartLengthTicker(currentCart.length);
-        if (currentCart != 0) {
-          const logType = "logAbandonedCart";
-          alert(`${currentCart.length} items added to cart, ${logType}`);
-        }
+    const newCart = [];
+    currentCart.forEach(cartItem => {
+      if (cartItem.sku != item.sku) {
+        newCart.push(cartItem);
       }
+      else {
+        newCartValue = newCartValue - (item.vars.basePrice * item.qty);
+        cartValueTicker(newCartValue);
+      }
+    });
+    currentCart = newCart;
+    cartLengthTicker(currentCart.length);
+    if (newCart != 0) {
+      const logType = "logAbandonedCart";
+      alert(`${currentCart.length} item${currentCart.length > 1 ? "s are" : " is"} now in cart, ${logType}`);
     }
     else {
-      alert("This item isn't in your cart!");
+      alert("Your cart is now empty.");
     }
     cartLengthTicker(currentCart.length);
   };
@@ -68,6 +64,12 @@ let newCartValue = 0;
     const logType = "logPurchase";
     alert(`${currentCart.length} items purchased, ${logType}`);
   };
+  
+  // const clearCart = () => {
+  //   cartLengthTicker(0);
+  //   cartValueTicker(0);
+  //   alert("Your cart has been cleared.");
+  // };
 
   return (
     <View style={styles.view}>
@@ -85,6 +87,17 @@ let newCartValue = 0;
         }
       }}
     />
+    {/* <Button
+      title="Empty Your Cart"
+      onPress={() => {
+        if (currentCartLength != 0) {
+          clearCart();
+        }
+        else {
+          alert("HI");
+        }
+      }}
+    /> */}
     <FlatList
     keyExtractor={(testItem) => {
       return testItem.sku;

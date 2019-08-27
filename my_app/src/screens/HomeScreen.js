@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, Image } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 const HomeScreen = (props) => {
@@ -7,6 +7,11 @@ const HomeScreen = (props) => {
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Hello!</Text>
+    {/* <Image
+      style={styles.logoImage}
+      resizeMode="contain"
+      source={require("../../assets/sailthru-logo.png")}
+    /> */}
     <Button 
       title="Your Message Center"
       onPress={() => nav.navigate("Messages")}

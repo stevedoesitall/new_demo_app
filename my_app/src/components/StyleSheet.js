@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontWeight: "600",
     },
+    logoImage: {
+        width: 300,
+        height: 300
+    },
     buttonRow: {
         flexDirection: "row",
         marginLeft: 20,
