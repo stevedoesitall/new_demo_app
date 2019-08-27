@@ -14,6 +14,7 @@ const LoginScreen = (props) => {
     <Text style={styles.header}>Enter Your Email:</Text>
 
     <TextInput 
+      placeholder="email@example.com"
       style={styles.input}
       autoCapitalize="none"
       autoCorrect={false}

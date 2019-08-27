@@ -20,7 +20,12 @@ const styles = StyleSheet.create({
         margin: 10,
         borderColor: "#000000",
         borderWidth: 1,
-        alignSelf: "stretch"
+        alignSelf: "stretch",
+        height: 30,
+        width: 300,
+        fontSize: 20,
+        alignSelf: "center",
+        textAlign: "center"
     },
     subhead: {
         fontSize: 20,
