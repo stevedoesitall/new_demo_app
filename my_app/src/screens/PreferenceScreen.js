@@ -4,7 +4,7 @@ import styles from "../components/StyleSheet.js";
 
 const PreferenceScreen = () => {
 
-  // Use either Sailthru vars or device attributes to autopopulate useState and the attrMap
+  // Use locally stored device attributes to autopopulate useState and the attrMap
   const [currentSwitchValue, switchValueToggle] = useState(true);
   const [currentPickerValue, pickerValueToggle] = useState("daily");
 

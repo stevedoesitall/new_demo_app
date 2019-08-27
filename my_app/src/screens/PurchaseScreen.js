@@ -65,13 +65,16 @@ let newCartValue = 0;
   const purchase = () => {
     const logType = "logPurchase";
     alert(`${currentCart.length} items purchased, ${logType}`);
+    clearCart();
   };
   
-  // const clearCart = () => {
-  //   cartLengthTicker(0);
-  //   cartValueTicker(0);
-  //   alert("Your cart has been cleared.");
-  // };
+  const clearCart = () => {
+    const newCartValue = currentCartValue - currentCartValue;
+    const newCartLength = currentCartLength - currentCartLength;
+    currentCart = [];
+    cartLengthTicker(newCartLength);
+    cartValueTicker(newCartValue);
+  };
 
   return (
     <View style={styles.view}>
@@ -82,24 +85,25 @@ let newCartValue = 0;
       title="Complete Your Purchase"
       onPress={() => {
         if (currentCartLength == 0) {
-          alert("Nothing in your cart!")
+          alert("Nothing in your cart!");
         }
         else {
           purchase();
         }
       }}
     />
-    {/* <Button
+    <Button
       title="Empty Your Cart"
       onPress={() => {
         if (currentCartLength != 0) {
           clearCart();
+          alert("You cart has been cleared.");
         }
         else {
-          alert("HI");
+          alert("Nothing in your cart!");
         }
       }}
-    /> */}
+    />
     <FlatList
     keyExtractor={(testItem) => {
       return testItem.sku;
