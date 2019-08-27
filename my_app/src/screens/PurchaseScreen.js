@@ -3,13 +3,14 @@ import { Text, View, Button, FlatList, Image, BackHandler } from "react-native";
 import styles from "../components/StyleSheet.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
 
+let currentCart = [];
+
 const PurchaseScreen = () => {
 
 const [currentCartLength, cartLengthTicker] = useState(0);
 const [currentCartValue, cartValueTicker] = useState(0);
 
 let newCartValue = 0;
-let currentCart = [];
 
   const addToCart = (item) => {
     if (currentCart.length > 0) {
@@ -25,6 +26,7 @@ let currentCart = [];
       }
       else {
         alert("This item is already in your cart!");
+        return false;
       }
     }
     else {
@@ -79,7 +81,7 @@ let currentCart = [];
     <Button
       title="Complete Your Purchase"
       onPress={() => {
-        if (currentCart.length == 0) {
+        if (currentCartLength == 0) {
           alert("Nothing in your cart!")
         }
         else {
