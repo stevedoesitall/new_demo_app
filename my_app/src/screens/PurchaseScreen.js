@@ -75,7 +75,7 @@ let newCartValue = 0;
 
   return (
     <View style={styles.view}>
-    <Text style={styles.header}>Make a Purchase:</Text>
+    <Text style={styles.header}>Make a Purchase</Text>
     <Text style={styles.subhead}>Number of Items in Cart: {currentCartLength}</Text>
     <Text style={styles.subhead}>Total Value of Cart: ${currentCartValue/100}</Text>
     <Button
