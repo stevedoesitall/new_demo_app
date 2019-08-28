@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import { Text, View, Button, FlatList, Image, BackHandler } from "react-native";
+import { Text, View, Button, FlatList, Image } from "react-native";
 import styles from "../components/StyleSheet.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
 import AsyncStorage from "@react-native-community/async-storage";
 
 let userCart = [];
 let userLTV;;
-
-// Add in AsyncStorage to store:
-// 1. User's Current Cart (use this to determine current cart length and value)
-// 2. User LTV
 
 const PurchaseScreen = () => {
 
@@ -27,7 +23,7 @@ const PurchaseScreen = () => {
         cartLengthTicker(userCart.length);
       }
     } catch(e) {
-      alert("Something went wrong...")
+      alert(`Something went wrong with getCart(): ${e}`);
     }
   };
 
@@ -42,7 +38,7 @@ const PurchaseScreen = () => {
       }
       lifetimeValueTicker(userLTV);
     } catch(e) {
-      alert("Something went wrong...")
+      alert(`Something went wrong with getLTV(): ${e}`);
     }
   };
   
@@ -54,18 +50,18 @@ const PurchaseScreen = () => {
     try {
       await AsyncStorage.setItem("@current_cart", JSON.stringify(userCartString));
     } catch (e) {
-      alert("Something went wrong!");
+      alert(`Something went wrong with storeCart(): ${e}`);
     }
   };
 
 
   const storeLTV = async (totalPurchaseValue) => {
-    const userLTV = totalPurchaseValue + lifetimeValue;
+    const userLTV = totalPurchaseValue + parseInt(lifetimeValue);
     try {
       await AsyncStorage.setItem("@user_ltv", userLTV);
       lifetimeValueTicker(userLTV);
     } catch (e) {
-      alert("Something went wrong!");
+      alert(`Something went wrong with storeLTV(): ${e}`);
     }
   };
 
@@ -112,7 +108,7 @@ const PurchaseScreen = () => {
           alert(`${item.title} removed from your cart.`);
         }
         else {
-          alert("Your cart has been emptied");
+          alert("Your cart has been emptied.");
         }
       }
       else {
@@ -165,9 +161,15 @@ const PurchaseScreen = () => {
   return (
     <View style={styles.view}>
     <Text style={styles.header}>Make a Purchase</Text>
-    <Text style={styles.subhead}>Number of Items in Cart: {currentCartLength}</Text>
-    <Text style={styles.subhead}>Total Value of Cart: ${currentCartValue/100}</Text>
-    <Text style={styles.subhead}>Your Total Lifetime Value: ${lifetimeValue/100}</Text>
+    <Text style={styles.subhead}>
+      <Text style={styles.label}>Number of Items in Cart: </Text> 
+        {currentCartLength}</Text>
+    <Text style={styles.subhead}>
+      <Text style={styles.label}>Total Value of Cart: </Text> 
+        ${currentCartValue/100}</Text>
+    <Text style={styles.subhead}>
+      <Text style={styles.label}>Your Total Lifetime Value: </Text> 
+        ${lifetimeValue/100}</Text>
     <Button
       title="Complete Your Purchase"
       onPress={() => {
