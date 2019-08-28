@@ -2,6 +2,13 @@ import React from "react";
 import { Text, View, Button, Image } from "react-native";
 import styles from "../components/StyleSheet.js";
 
+// Add an "About You" page with:
+// 1. LTV
+// 2. UserID
+// 3. Membership Tier
+// 4. Current preferences
+// 5. Signup date 
+
 const HomeScreen = (props) => {
   const nav = props.navigation;
   return (
