@@ -83,7 +83,7 @@ const PurchaseScreen = () => {
       userCart.forEach(cartItem => {
         totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.vars.basePrice);
       });
-      alert(`You purchased ${totalItems} total items for $${totalPurchaseValue/100}.`);
+      alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
       clearCart();
     }
     cartLengthTicker(userCart.length);
