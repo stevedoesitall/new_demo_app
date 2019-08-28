@@ -2,78 +2,103 @@ import React, { useState } from "react";
 import { Text, View, Button, FlatList, Image, BackHandler } from "react-native";
 import styles from "../components/StyleSheet.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
+import AsyncStorage from "@react-native-community/async-storage";
 
-let currentCart = [];
+let userCart = [];
+
+// Add in AsyncStorage to store:
+// 1. User's Current Cart (use this to determine current cart length and value)
+// 2. User LTV
 
 const PurchaseScreen = () => {
 
-const [currentCartLength, cartLengthTicker] = useState(0);
-const [currentCartValue, cartValueTicker] = useState(0);
-
-let newCartValue = 0;
+  const [currentCartLength, cartLengthTicker] = useState(0);
+  const [currentCartValue, cartValueTicker] = useState(0);
+  const [lifetimeValue, lifetimeValueTicker] = useState(0);
 
   const addToCart = (item) => {
-    if (currentCart.length > 0) {
-      const currentItems = [];
-      currentCart.forEach(cartItem => {
-        currentItems.push(cartItem.title);
+    if (userCart.length > 0) {
+      const cartContents = [];
+      userCart.forEach(cartItem => {
+        cartContents.push(cartItem.title);
       });
-      if (!currentItems.includes(item.title)) {
-        currentCart.push(item);
-        cartLengthTicker(currentCart.length);
-        newCartValue = newCartValue + item.vars.basePrice * item.qty;
-        cartValueTicker(newCartValue);
+      if (!cartContents.includes(item.title)) {
+        userCart.push(item);
+        alert(`${item.title} added to your cart.`);
       }
       else {
-        alert("This item is already in your cart!");
-        return false;
+        alert(`${item.title} is already in your cart!`);
       }
     }
     else {
-      currentCart.push(item);
-      cartLengthTicker(currentCart.length);
-      newCartValue = newCartValue + (item.vars.basePrice * item.qty);
-      cartValueTicker(newCartValue);
+      userCart.push(item);
+      alert(`${item.title} added to your cart.`);
     }
-    const logType = "logAbandonedCart";
-    alert(`${currentCart.length} item${currentCart.length > 1 ? "s are" : " is"} in your cart, ${logType}`);
+    let totalPurchaseValue = 0;
+    userCart.forEach(cartItem => {
+      totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.vars.basePrice);
+    });
+    cartValueTicker(totalPurchaseValue);
+    cartLengthTicker(userCart.length);
   };
 
-  const removeFromCart = (item) => {
-    const newCart = [];
-    currentCart.forEach(cartItem => {
-      if (cartItem.sku != item.sku) {
-        newCart.push(cartItem);
+  const removeFromCart = (item, type) => {
+    if (userCart.length > 0) {
+      const cartContents = [];
+      userCart.forEach(cartItem => {
+        cartContents.push(cartItem.title);
+      });
+      if (cartContents.includes(item.title)) {
+        userCart = userCart.filter(cartItem => cartItem.title != item.title);
+        if (type != "clear_cart") {
+          alert(`${item.title} removed from your cart.`);
+        }
+        else {
+          alert("Your cart has been emptied");
+        }
       }
       else {
-        newCartValue = newCartValue - (item.vars.basePrice * item.qty);
-        cartValueTicker(newCartValue);
+        alert(`${item.title} isn't in your cart.`);
       }
-    });
-    currentCart = newCart;
-    cartLengthTicker(currentCart.length);
-    if (newCart != 0) {
-      const logType = "logAbandonedCart";
-      alert(`${currentCart.length} item${currentCart.length > 1 ? "s are" : " is"} now in cart, ${logType}`);
     }
     else {
-      alert("Your cart is now empty.");
+      alert("You can't remove items from an empty cart.");
     }
-    cartLengthTicker(currentCart.length);
-  };
+    let totalPurchaseValue = 0;
+    userCart.forEach(cartItem => {
+      totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.vars.basePrice);
+    });
+    cartValueTicker(totalPurchaseValue);
+    cartLengthTicker(userCart.length);
+  }; 
 
   const purchase = () => {
-    const logType = "logPurchase";
-    alert(`${currentCart.length} items purchased, ${logType}`);
-    clearCart();
+    if (userCart.length == 0) {
+      alert("You can't checkout with an empty cart.");
+      return false;
+    }
+    else {
+      let totalItems = userCart.length;
+      let totalPurchaseValue = 0;
+      userCart.forEach(cartItem => {
+        totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.vars.basePrice);
+      });
+      alert(`You purchased ${totalItems} total items for $${totalPurchaseValue/100}.`);
+      clearCart();
+    }
+    cartLengthTicker(userCart.length);
   };
-  
+
   const clearCart = () => {
-    const newCartValue = currentCartValue - currentCartValue;
-    const newCartLength = currentCartLength - currentCartLength;
-    currentCart = [];
-    cartLengthTicker(newCartLength);
-    cartValueTicker(newCartValue);
+    const type = "clear_cart";
+    if (userCart.length > 0) {
+      userCart.forEach(item => {
+        removeFromCart(item, type);
+      });
+    }
+    else {
+      alert("There's nothing in your cart!");
+    }
   };
 
   return (
@@ -84,24 +109,14 @@ let newCartValue = 0;
     <Button
       title="Complete Your Purchase"
       onPress={() => {
-        if (currentCartLength == 0) {
-          alert("Nothing in your cart!");
-        }
-        else {
-          purchase();
-        }
+        purchase();
+        alert(userCart.length);
       }}
     />
     <Button
       title="Empty Your Cart"
       onPress={() => {
-        if (currentCartLength != 0) {
-          clearCart();
-          alert("You cart has been cleared.");
-        }
-        else {
-          alert("Nothing in your cart!");
-        }
+        clearCart();
       }}
     />
     <FlatList

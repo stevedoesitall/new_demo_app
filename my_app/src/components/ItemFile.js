@@ -37,4 +37,4 @@ const testSectionCommerce = '{"recommendations": [{"url":"http://example.com/hat
 const testSectionMedia = '{"recommendations": [{"url":"http://example.com/politics", "title":"Politics", "image":"https://images.freeimages.com/images/large-previews/4f2/german-reichstag-1515628.jpg"}, {"url":"http://example.com/tech", "title":"Tech", "image":"https://images.freeimages.com/images/large-previews/2c2/hi-tech-1-1554527.jpg"}, {"url":"http://example.com/entertainment", "title":"Entertainment", "image":"https://images.freeimages.com/images/large-previews/587/disco-ball-1421094.jpg"}]}';
 
 
-  export { itemDetailsArray, testSectionCommerce, testSectionMedia };
+export { itemDetailsArray, testSectionCommerce, testSectionMedia };
