@@ -5,12 +5,69 @@ import { itemDetailsArray } from "../components/ItemFile.js";
 import AsyncStorage from "@react-native-community/async-storage";
 
 let userCart = [];
+let userLTV;;
 
 // Add in AsyncStorage to store:
 // 1. User's Current Cart (use this to determine current cart length and value)
 // 2. User LTV
 
 const PurchaseScreen = () => {
+
+  const getCart = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@current_cart");
+      if (value) {
+        userCart = JSON.parse(value).userCartObject;
+
+        let totalPurchaseValue = 0;
+        userCart.forEach(cartItem => {
+          totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.vars.basePrice);
+        });
+        cartValueTicker(totalPurchaseValue);
+        cartLengthTicker(userCart.length);
+      }
+    } catch(e) {
+      alert("Something went wrong...")
+    }
+  };
+
+  const getLTV = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@user_ltv");
+      if (value) {
+        userLTV = value;
+      }
+      else {
+        userLTV = 0;
+      }
+      lifetimeValueTicker(userLTV);
+    } catch(e) {
+      alert("Something went wrong...")
+    }
+  };
+  
+  getCart();
+  getLTV();
+
+  const storeCart = async () => {
+    const userCartString = { userCartObject: userCart };
+    try {
+      await AsyncStorage.setItem("@current_cart", JSON.stringify(userCartString));
+    } catch (e) {
+      alert("Something went wrong!");
+    }
+  };
+
+
+  const storeLTV = async (totalPurchaseValue) => {
+    const userLTV = totalPurchaseValue + lifetimeValue;
+    try {
+      await AsyncStorage.setItem("@user_ltv", userLTV);
+      lifetimeValueTicker(userLTV);
+    } catch (e) {
+      alert("Something went wrong!");
+    }
+  };
 
   const [currentCartLength, cartLengthTicker] = useState(0);
   const [currentCartValue, cartValueTicker] = useState(0);
@@ -40,6 +97,7 @@ const PurchaseScreen = () => {
     });
     cartValueTicker(totalPurchaseValue);
     cartLengthTicker(userCart.length);
+    storeCart();
   };
 
   const removeFromCart = (item, type) => {
@@ -70,6 +128,7 @@ const PurchaseScreen = () => {
     });
     cartValueTicker(totalPurchaseValue);
     cartLengthTicker(userCart.length);
+    storeCart();
   }; 
 
   const purchase = () => {
@@ -85,8 +144,10 @@ const PurchaseScreen = () => {
       });
       alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
       clearCart();
+      storeLTV(totalPurchaseValue);
     }
     cartLengthTicker(userCart.length);
+    storeCart();
   };
 
   const clearCart = () => {
@@ -106,6 +167,7 @@ const PurchaseScreen = () => {
     <Text style={styles.header}>Make a Purchase</Text>
     <Text style={styles.subhead}>Number of Items in Cart: {currentCartLength}</Text>
     <Text style={styles.subhead}>Total Value of Cart: ${currentCartValue/100}</Text>
+    <Text style={styles.subhead}>Your Total Lifetime Value: ${lifetimeValue/100}</Text>
     <Button
       title="Complete Your Purchase"
       onPress={() => {
