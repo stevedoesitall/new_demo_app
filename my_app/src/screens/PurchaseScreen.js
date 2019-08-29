@@ -5,7 +5,7 @@ import { itemDetailsArray } from "../components/ItemFile.js";
 import AsyncStorage from "@react-native-community/async-storage";
 
 let userCart = [];
-let userLTV;;
+let userTier;
 
 const PurchaseScreen = () => {
 
@@ -41,9 +41,24 @@ const PurchaseScreen = () => {
       alert(`Something went wrong with getLTV(): ${e}`);
     }
   };
+
+  const getTier = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@user_tier");
+      if (value) {
+        userTier = value;
+      }
+      else {
+        userTier = "Bronze";
+      }
+    } catch(e) {
+      alert(`Something went wrong with getLTV(): ${e}`);
+    }
+  };
   
   getCart();
   getLTV();
+  getTier();
 
   const storeCart = async () => {
     const userCartString = { userCartObject: userCart };
@@ -60,8 +75,52 @@ const PurchaseScreen = () => {
     try {
       await AsyncStorage.setItem("@user_ltv", userLTV);
       lifetimeValueTicker(userLTV);
+      storeTier(userLTV);
     } catch (e) {
       alert(`Something went wrong with storeLTV(): ${e}`);
+    }
+  };
+
+
+  //Add function to check if user moved into a new tier
+  const storeTier = async (currentLTV) => {
+
+    const tierMap = {
+      "Diamond": 5,
+      "Platinum": 4,
+      "Gold": 3,
+      "Silver": 2,
+      "Bronze": 1
+    };
+
+    const currentLTVDivided = currentLTV / 100;
+
+    let newUserTier;
+    if (currentLTVDivided >= 5000) {
+      newUserTier = "Diamond";
+    }
+    else if (currentLTVDivided >= 1000) {
+      newUserTier = "Platinum";
+    }
+    else if (currentLTVDivided >= 500) {
+      newUserTier = "Gold";
+    }
+    else if (currentLTVDivided >= 100) {
+      newUserTier = "Silver";
+    }
+    else {
+      newUserTier = "Bronze";
+    };
+    try {
+      await AsyncStorage.setItem("@user_tier", newUserTier);
+      const currentTierNum = tierMap[userTier];
+      const newTierNum = tierMap[newUserTier];
+      if (newTierNum > currentTierNum) {
+        alert(`Congratulations! You are now a ${newUserTier} member.`);
+        //Add custom event trigger here
+      }
+    } catch (e) {
+      alert(`Something went wrong with storeCart(): ${e}`);
     }
   };
 
@@ -141,9 +200,9 @@ const PurchaseScreen = () => {
       alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
       clearCart();
       storeLTV(totalPurchaseValue);
+      cartLengthTicker(userCart.length);
+      storeCart();
     }
-    cartLengthTicker(userCart.length);
-    storeCart();
   };
 
   const clearCart = () => {
@@ -167,14 +226,10 @@ const PurchaseScreen = () => {
     <Text style={styles.subhead}>
       <Text style={styles.label}>Total Value of Cart: </Text> 
         ${currentCartValue/100}</Text>
-    <Text style={styles.subhead}>
-      <Text style={styles.label}>Your Total Lifetime Value: </Text> 
-        ${lifetimeValue/100}</Text>
     <Button
       title="Complete Your Purchase"
       onPress={() => {
         purchase();
-        alert(userCart.length);
       }}
     />
     <Button

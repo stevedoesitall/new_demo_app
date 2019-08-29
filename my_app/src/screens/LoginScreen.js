@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Text, View, Button, TextInput } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import getDate from "../components/DateGenerator.js";
 import { Base64 } from "js-base64";
  
 const LoginScreen = (props) => {
+
   const nav = props.navigation;
 
   const [email, setEmail] = useState("");
@@ -33,6 +35,36 @@ const LoginScreen = (props) => {
 
 const prodMode = false;
 
+const storeUserData = async (userEmail, userId) => {
+  const userIdPair = ["@user_id", userId];
+  const userEmailPair = ["@user_email", userEmail];
+
+  try {
+    await AsyncStorage.multiSet([userEmailPair, userIdPair]);
+  } catch (e) {
+    alert(`Something went wrong with storeLTV(): ${e}`);
+  }
+};
+
+const getInstallDate = async () => {
+  try {
+    const value = await AsyncStorage.getItem("@app_install_date");
+    if (!value) {
+      storeInstallDate();
+    }
+  } catch(e) {
+    alert(`Something went wrong with getInstallDate(): ${e}`);
+  }
+};
+
+const storeInstallDate = async () => {
+  try {
+    await AsyncStorage.setItem("@app_install_date", getDate());
+  } catch (e) {
+    alert(`Something went wrong with storeLTV(): ${e}`);
+  }
+};
+
 const getUserKeys = (email) => {
   const userEmail = email;
   const userId = Base64.encode(email.toLowerCase()).substring(3,11).toUpperCase();
@@ -42,6 +74,9 @@ const getUserKeys = (email) => {
   };
 
   alert(`You are logged in. Your user ID is: ${userId}`);
+
+  storeUserData(userEmail, userId);
+  getInstallDate();
 
   // Carnival.setUserEmail(userEmail);
   // Carnival.setUserId(userId);

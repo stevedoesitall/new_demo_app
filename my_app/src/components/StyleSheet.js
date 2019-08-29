@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     },
     subhead: {
         fontSize: 20,
-        alignSelf: "center"
+        alignSelf: "center",
+        marginBottom: 10
     },
     label: {
         fontSize: 20,
