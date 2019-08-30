@@ -6,6 +6,8 @@ import styles from "../components/StyleSheet.js";
 let currentAlertPrefs;
 let currentPushPref;
 
+//Set a ListSub Var in ST for managing email prefs; do a get to check current email status
+
 const PreferenceScreen = () => {
 
   getPrefsAndAlert = async () => {

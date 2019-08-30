@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Button, FlatList, Image } from "react-native";
+import { Text, View, Button, FlatList, Image, TextInput } from "react-native";
 import styles from "../components/StyleSheet.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -69,7 +69,6 @@ const PurchaseScreen = () => {
     }
   };
 
-
   const storeLTV = async (totalPurchaseValue) => {
     const userLTV = totalPurchaseValue + parseInt(lifetimeValue);
     try {
@@ -80,7 +79,6 @@ const PurchaseScreen = () => {
       alert(`Something went wrong with storeLTV(): ${e}`);
     }
   };
-
 
   //Add function to check if user moved into a new tier
   const storeTier = async (currentLTV) => {
@@ -225,7 +223,7 @@ const PurchaseScreen = () => {
         {currentCartLength}</Text>
     <Text style={styles.subhead}>
       <Text style={styles.label}>Total Value of Cart: </Text> 
-        ${currentCartValue/100}</Text>
+        ${(currentCartValue/100).toFixed(2)}</Text>
     <Button
       title="Complete Your Purchase"
       onPress={() => {

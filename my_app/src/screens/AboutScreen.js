@@ -11,6 +11,9 @@ let currentAlertPrefs;
 let currentPushPref;
 let userId;
 let userEmail;
+let membershipHex;
+
+//Note to add a ST var for list status and display newsletter preference module
 
 const AboutScreen = () => {
 
@@ -104,27 +107,32 @@ const AboutScreen = () => {
             {
             status: "Diamond",
             points: 5000, 
-            level: 5
+            level: 5,
+            hex: "#1DACD6"
             },
             {
             status: "Platinum",
             points: 1000, 
-            level: 4
+            level: 4,
+            hex: "#A7b0C0"
             },
             {
             status: "Gold",
             points: 500, 
-            level: 3
+            level: 3,
+            hex: "#D4AF37"
             },
             {
             status: "Silver",
             points: 100, 
-            level: 2
+            level: 2,
+            hex: "#AAA9AD"
             },
             {
             status: "Bronze",
             points: 0, 
-            level: 1
+            level: 1,
+            hex: "#B08D57"
             }
         ];
 
@@ -153,11 +161,15 @@ const AboutScreen = () => {
 
             for (let pos = 0; pos < tierMap.length; pos++) {
                 if (tierMap[pos].status == userTier) {
+                    setMembershipHex(tierMap[pos].hex);
                     setNextLevel(tierMap[pos-1].status);
                     setPointsToNextLevel(Math.round(tierMap[pos-1].points - userLTV/100));
                     break;
                 }
             };
+        }
+        else {
+            setMembershipHex(tierMap[0].hex);
         }
       }
 
@@ -168,6 +180,7 @@ const AboutScreen = () => {
     const [currentAlertValue, alertToggle] = useState(currentAlertPrefs);
     const [lifetimeValue, lifetimeValueTicker] = useState(0);
     const [membershipTier, setMembershipTier] = useState(userTier);
+    const [currentMembershipHex, setMembershipHex] = useState(membershipHex);
     const [pointsToNextLevel, setPointsToNextLevel] = useState(0);
     const [nextLevel, setNextLevel] = useState("Bronze");
     const [currentUserId, setId] = useState(userId);
@@ -195,10 +208,11 @@ const AboutScreen = () => {
         {currentPushValue ? currentAlertValue : "N/A"}</Text>
         <Text style={styles.subhead}>
             <Text style={styles.label}>Total Purchase Amount: </Text> 
-        ${lifetimeValue/100}</Text>
+        ${(lifetimeValue/100).toFixed(2)}</Text>
         <Text style={styles.subhead}>
-            <Text style={styles.label}>Membership Tier: </Text> 
-        {membershipTier}</Text>
+            <Text style={styles.label}>Membership Tier: </Text>
+            <Text style={{color: currentMembershipHex}}>{membershipTier}</Text>
+            </Text>
         {userTier != topLevel ? 
         <Text style={styles.subhead}>
             <Text style={styles.label}>Points to {nextLevel} Tier: </Text> 

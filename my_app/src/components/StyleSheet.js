@@ -27,6 +27,15 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         textAlign: "center"
     },
+    numInput: {
+        margin: 8,
+        borderColor: "#000000",
+        borderWidth: 1,
+        fontSize: 18,
+        height: 28,
+        width: 28,
+        textAlign: "center"
+    },
     subhead: {
         fontSize: 20,
         alignSelf: "center",
