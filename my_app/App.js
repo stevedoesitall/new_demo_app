@@ -22,7 +22,7 @@ const navigator = createStackNavigator(
   {
     initialRouteName: "Login",
     defaultNavigationOptions: {
-      title: "App"
+      title: "Sailthru Demo App"
     }
   }
 );

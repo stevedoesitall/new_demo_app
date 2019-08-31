@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Switch, PickerIOS } from "react-native";
+import { Text, View, Switch, PickerIOS, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 
@@ -66,7 +66,25 @@ const PreferenceScreen = () => {
     attrMap.push_subscribed = newValue;
     pushToggle(newValue);
     storeData("@push_subscribed", newValue);
-    alert(`${attrMap.push_subscribed ? "You are now subscribed to push alerts." : "You are now unsubscribed from push alerts."}`);
+
+    let successBlurb;
+
+    if (attrMap.push_subscribed) {
+      successBlurb = "You are now subscribed to push alerts."
+    }
+    else {
+      successBlurb = "You are now unsubscribed from push alerts."
+    }
+
+    Alert.alert(
+      "Success",
+      successBlurb,
+      [
+        {
+          text: "Dismiss"
+        }
+      ],
+    );
 
     // attrMap.setBoolean("push_subscribed", value);
     // Carnival.setAttributes(attrMap).catch(e => {
@@ -79,7 +97,17 @@ const PreferenceScreen = () => {
       attrMap.alert_prefs = value;
       alertToggle(value);
       storeData("@alert_preferences", value);
-      alert(`Your preferences have been updated to ${value} notifications!`);
+      
+      Alert.alert(
+        "Success",
+        `Your preferences have been updated to ${value} notifications!`,
+        [
+          {
+            text: "Dismiss"
+          }
+        ],
+      );
+      
     };
 
     // attrMap.setString("alert_preferences", value);
@@ -103,14 +131,16 @@ const PreferenceScreen = () => {
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Your Preference Center</Text>
-    <Text style={styles.subhead}>Hit the Switch to {currentPushValue ? "Unsubscribe" : "Subscribe"}</Text>
+    <Text style={styles.subhead}><Text style={styles.label}>Current Status:</Text> {currentPushValue ? "Subscribed" : "Unsubscribed"}</Text>
     
     <Switch
       style={styles.switcher}
       trackColor={{
+        false: "rgb(102, 0, 0)",
         true: "rgb(0, 153, 0)"
       }}
       ios_backgroundColor="rgb(102, 0, 0)"
+      // thumbColor="rgb(102, 0, 0)"
       value={currentPushValue}
       onValueChange={() => alertSwitch(currentPushValue)}
     />

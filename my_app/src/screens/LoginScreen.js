@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, TextInput, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import getDate from "../components/DateGenerator.js";
@@ -80,6 +80,19 @@ const getUserKeys = (email) => {
   };
 
   if (prodMode == true) {
+
+    const successBlurb = `You are now logged in. Your User ID is ${userId}.`;
+
+    Alert.alert(
+      "Thank You",
+      successBlurb,
+      [
+        {
+          text: "Dismiss"
+        }
+      ],
+    );
+
     alert(`You are logged in. Your user ID is: ${userId}`);
   };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity, FlatList } from "react-native";
+import { Text, View, TouchableOpacity, FlatList, Alert } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 const EventScreen = () => {
@@ -35,11 +35,23 @@ const EventScreen = () => {
 };
 
 const triggerEvent = (rating) => {
+  const ratingName = rating.name.toLowerCase();
   const eventName = "AppRated";
   const eventVars = {};
   eventVars["rating"] = rating.value;
   
-  alert(`Event: ${eventName}, Value: ${eventVars.rating}`);
+  const successBlurb = `Your rating of ${ratingName} has been recorded.`;
+
+  Alert.alert(
+    "Thank You",
+    successBlurb,
+    [
+      {
+        text: "Dismiss"
+      }
+    ],
+  );
+
 };
 
 export default EventScreen;
