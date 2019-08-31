@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import tierMap from "../components/TierMap.js";
@@ -187,12 +187,11 @@ const AboutScreen = () => {
         {(lifetimeValue > 0) ? (pointsToNextLevel + 1) : 100}</Text>
         : null
         }
-        <Button
-            title="Reset Your Status"
-            onPress={() => {
-                resetStatus();
-            }}
-        />
+
+        <TouchableOpacity onPress={() => resetStatus()}>
+            <Text style={styles.resetButton}>Reset Your Status</Text>
+        </TouchableOpacity>
+
     </View>
     );
 };

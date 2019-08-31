@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, TextInput } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import getDate from "../components/DateGenerator.js";
@@ -24,10 +24,16 @@ const LoginScreen = (props) => {
       onChangeText={(userEmail) => setEmail(userEmail)}
     />
 
-    <Button
+    {/* <Button
       title="Submit"
       onPress={() => emailValidator(nav, email)}
-    />
+    /> */}
+
+    <TouchableOpacity
+      onPress={() => emailValidator(nav, email)}
+    >
+      <Text style={styles.customButton}>Submit</Text>
+    </TouchableOpacity>
 
   </View>
   );
@@ -66,8 +72,8 @@ const storeInstallDate = async () => {
 };
 
 const getUserKeys = (email) => {
-  const userEmail = email;
-  const userId = Base64.encode(email.toLowerCase()).substring(3,11).toUpperCase();
+  const userEmail = email.toLowerCase();
+  const userId = Base64.encode(userEmail).substring(3,11).toUpperCase();
   const lastAppLoginDate = getDate();
   const profileVars = {
     "last_app_login_date" : lastAppLoginDate

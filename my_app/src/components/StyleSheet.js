@@ -7,8 +7,9 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     header: {
-        fontSize: 30,
+        fontSize: 28,
         marginBottom: 20,
+        fontFamily: "Futura",
         fontWeight: "900"
     },
     purchaseImage: {
@@ -25,7 +26,8 @@ const styles = StyleSheet.create({
         width: 300,
         fontSize: 20,
         alignSelf: "center",
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: "Futura"
     },
     numInput: {
         margin: 8,
@@ -38,13 +40,15 @@ const styles = StyleSheet.create({
     },
     subhead: {
         fontSize: 20,
+        fontFamily: "Futura",
         alignSelf: "center",
         marginBottom: 10
     },
     label: {
         fontSize: 20,
+        fontFamily: "Futura",
         alignSelf: "center",
-        fontWeight: "600",
+        fontWeight: "900",
     },
     logoImage: {
         width: 300,
@@ -58,6 +62,7 @@ const styles = StyleSheet.create({
     },
     pickerStylesVisible: {
         alignSelf: "center",
+        fontFamily: "Futura",
         width: 100
     },
     pickerStylesHidden: {
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
     },
     preferencesStyleVisible: {
         fontSize: 20,
+        fontFamily: "Futura",
         alignSelf: "center",
         marginTop: 20
     },
@@ -83,13 +89,107 @@ const styles = StyleSheet.create({
     },  
     recTitle: {
         marginBottom: 5,
-        marginTop: 15,
-        fontSize: 20,
+        marginTop: 40,
+        fontFamily: "Futura",
+        fontSize: 25,
         fontWeight: "900",
         alignSelf: "center"
     },
     switcher: {
         marginTop: 10
+    },
+    customButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(0, 124, 170)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        paddingBottom: 2,
+        fontSize: 20,
+        fontFamily: "Futura"
+    },
+    textButton: {
+        color: "rgb(0, 102, 204)",
+        fontSize: 20,
+        fontFamily: "Futura",
+        marginLeft: 5
+    },  
+    toHome: {
+        width: 300
+    },
+    resetButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(168, 0, 0)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        paddingBottom: 2,
+        fontSize: 20,
+        fontFamily: "Futura"
+    },
+    excellentButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(0, 204, 0)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        paddingBottom: 2,
+        fontSize: 20,
+        fontFamily: "Futura"
+    },
+    aboveAverageButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(143, 216, 47)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        paddingBottom: 2,
+        fontSize: 20,
+        fontFamily: "Futura"
+    },
+    averageButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(239, 224, 13)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        paddingBottom: 2,
+        fontSize: 20,
+        fontFamily: "Futura"
+    },
+    belowAverageButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(255, 128, 0)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        paddingBottom: 2,
+        fontSize: 20,
+        fontFamily: "Futura"
     }
 });
 

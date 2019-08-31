@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, Button, Image, FlatList } from "react-native";
+import { Text, View, Button, Image, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import { testSectionCommerce, testSectionMedia } from "../components/ItemFile.js";
 
 // May be a good use of SectionList
 // https://facebook.github.io/react-native/docs/sectionlist
+
+// Add functionality to view impression, click, and pageview
 
 const RecsScreen = () => {
   const [vertical, setVertical] = useState("Commerce");
@@ -30,33 +32,37 @@ const RecsScreen = () => {
     <Text style={styles.subhead}>Showing {vertical} {algorithm} Recs</Text>
     <View style={styles.buttonRow}>
         <Text style={styles.label}>Choose Algorithm:</Text>
-        <Button
-          title="Interest"
+        <TouchableOpacity
           onPress={() => {
             setAlgo("Interest");
           }}
-        />
-        <Button
-          title="Random"
+        >
+          <Text style={styles.textButton}>Interest</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             setAlgo("Random");
           }}
-        />
+        >
+          <Text style={styles.textButton}>Random</Text>
+        </TouchableOpacity>
     </View>
     <View style={styles.buttonRow}>
         <Text style={styles.label}>Choose Vertical:</Text>
-        <Button
-          title="Media"
+        <TouchableOpacity
           onPress={() => {
             setVertical("Media");
           }}
-        />
-        <Button
-          title="Commerce"
+        >
+          <Text style={styles.textButton}>Media</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             setVertical("Commerce");
           }}
-        />
+        >
+          <Text style={styles.textButton}>Commerce</Text>
+        </TouchableOpacity>
     </View>
     <FlatList
       keyExtractor={(testItem) => {
@@ -72,9 +78,11 @@ const RecsScreen = () => {
                 source={{uri: item.image}}
                 resizeMode="contain"
             />
-            <Button
-              title={blurb}
-            />
+            <View style={styles.buttonRow}>
+              <TouchableOpacity>
+                  <Text style={styles.belowAverageButton}>{blurb}</Text>
+              </TouchableOpacity>
+              </View>
           </View>
         );
       }}

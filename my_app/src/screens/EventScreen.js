@@ -1,15 +1,15 @@
 import React from "react";
-import { Text, View, Button, FlatList } from "react-native";
+import { Text, View, TouchableOpacity, FlatList } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 const EventScreen = () => {
 
   const ratings = [
-    {value: 5, name: "Excellent"},
-    {value: 4, name: "Above Average"},
-    {value: 3, name: "Average"},
-    {value: 2, name: "Below Average"},
-    {value: 1, name: "Poor"}
+    {value: 5, name: "Excellent", style: "excellentButton"},
+    {value: 4, name: "Above Average", style: "aboveAverageButton"},
+    {value: 3, name: "Average", style: "averageButton"},
+    {value: 2, name: "Below Average", style: "belowAverageButton"},
+    {value: 1, name: "Poor", style: "resetButton"}
   ];
 
   return (
@@ -22,10 +22,11 @@ const EventScreen = () => {
       data={ratings}
       renderItem={( {item} ) => {
         return (
-          <Button
-            title={item.name}
-            onPress={() => triggerEvent(item)}
-          />
+
+        <TouchableOpacity onPress={() => triggerEvent(item)}>
+            <Text style={styles[item.style]}>{item.name}</Text>
+        </TouchableOpacity>
+          
         );
       }}
     />

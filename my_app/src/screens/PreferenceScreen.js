@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Switch, Picker } from "react-native";
+import { Text, View, Switch, PickerIOS } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 
@@ -107,21 +107,25 @@ const PreferenceScreen = () => {
     
     <Switch
       style={styles.switcher}
+      trackColor={{
+        true: "rgb(0, 153, 0)"
+      }}
+      ios_backgroundColor="rgb(102, 0, 0)"
       value={currentPushValue}
       onValueChange={() => alertSwitch(currentPushValue)}
     />
-    <Text style={preferencesStyle}>How Often?</Text>
+    <Text style={preferencesStyle}>Manage Your Alert Frequency:</Text>
 
-    <Picker
-      style={pickerStyle}
+    <PickerIOS
+      itemStyle={pickerStyle}
       selectedValue={currentAlertValue}
       onValueChange={(value) => updatePrefs(value)}
     >
-      <Picker.Item label="Daily" value="daily" />
-      <Picker.Item label="Weekly" value="weekly" />
-      <Picker.Item label="Realtime" value="realtime" />
+      <PickerIOS.Item label="Daily" value="daily" />
+      <PickerIOS.Item label="Weekly" value="weekly" />
+      <PickerIOS.Item label="Realtime" value="realtime" />
 
-    </Picker>
+    </PickerIOS>
   </View>
   );
 };

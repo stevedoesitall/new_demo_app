@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Text, View, Button, FlatList } from "react-native";
+import { Text, View, Button, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import PurchaseDetails from "../components/PurchaseComp.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
 import tierMap from "../components/TierMap.js";
 import AsyncStorage from "@react-native-community/async-storage";
-
-//NOTE: Check the occassional "emptied card" double prompt
 
 let userTier;
 let userCart = [];
@@ -124,7 +122,8 @@ const PurchaseScreen = () => {
 
       const updateCart = (qty, item) => {
           if (qty == 0) {
-              removeFromCart(item);
+              const type = "update";
+              removeFromCart(item, type);
           }
           else {
             item.qty = qty;
@@ -143,13 +142,14 @@ const PurchaseScreen = () => {
                             if (cartItem.qty == item.qty) {
                               alert("No changes made to cart.");
                             }
-                            else {}
+                            else {
                             cartItem.qty = item.qty;
                             alert(`There are now ${item.qty} of ${item.title} in your cart.`);
+                            }
                         }
                     });
+                  }
                 }
-            }
             else {
                 userCart.push(item);
                 alert(`${item.title} added to your cart.`);
@@ -172,10 +172,10 @@ const PurchaseScreen = () => {
           });
           if (cartContents.includes(item.title)) {
             userCart = userCart.filter(cartItem => cartItem.title != item.title);
-            if (type != "clear_cart") {
+            if (type == "update") {
               alert(`${item.title} removed from your cart.`);
             }
-            else {
+            else if (type == "clear_cart") {
               alert("Your cart has been emptied.");
             }
           }
@@ -201,6 +201,8 @@ const PurchaseScreen = () => {
           return false;
         }
         else {
+          const type = "purchase";
+
           let totalItems = 0;
           let totalPurchaseValue = 0;
           userCart.forEach(cartItem => {
@@ -208,15 +210,18 @@ const PurchaseScreen = () => {
             totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.price);
           });
           alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
-          clearCart();
+          clearCart(type);
           storeLTV(totalPurchaseValue);
           cartLengthTicker(userCart.length);
           storeCart();
         }
       };
     
-      const clearCart = () => {
-        const type = "clear_cart";
+      const clearCart = (clearType) => {
+        let type;
+        if (!clearType) {
+          type = "clear_cart";
+        }
         if (userCart.length > 0) {
           userCart.forEach(item => {
             removeFromCart(item, type);
@@ -236,18 +241,20 @@ const PurchaseScreen = () => {
         <Text style={styles.subhead}>
           <Text style={styles.label}>Total Value of Cart: </Text> 
             ${(currentCartValue/100).toFixed(2)}</Text>
-        <Button
-          title="Complete Your Purchase"
+        <TouchableOpacity
           onPress={() => {
             purchase();
           }}
-        />
-        <Button
-          title="Empty Your Cart"
+        >
+        <Text style={styles.customButton}>Complete Your Purchase</Text>
+      </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             clearCart();
           }}
-        />
+        >
+        <Text style={styles.customButton}>Empty Your Cart</Text>
+        </TouchableOpacity>
         <FlatList
             keyExtractor={(testItem => {
                 return testItem.sku

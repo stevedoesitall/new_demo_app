@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button, Image } from "react-native";
+import { Text, View, Button, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 const HomeScreen = (props) => {
@@ -12,30 +12,42 @@ const HomeScreen = (props) => {
       resizeMode="contain"
       source={require("../../assets/sailthru-logo.png")}
     /> */}
-    <Button 
-      title="Your Message Center"
+    <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Messages")}
-    />
-    <Button 
-      title="Your Preference Center"
+    >
+      <Text style={styles.customButton}>Your Message Center</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Preferences")}
-    />
-    <Button 
-      title="Make a Purchase"
+    >
+      <Text style={styles.customButton}>Your Preference Center</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Purchase")}
-    />
-    <Button 
-      title="Recommended for You"
+    >
+      <Text style={styles.customButton}>Make a Purchase</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Recs")}
-    />
-    <Button 
-      title="Account Information"
+    >
+      <Text style={styles.customButton}>Recommended for You</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("About")}
-    />
-    <Button 
-      title="Rate the App"
+    >
+      <Text style={styles.customButton}>Account Information</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Event")}
-    />
+    >
+      <Text style={styles.customButton}>Rate the App</Text>
+    </TouchableOpacity>
+
   </View>
   );
 };
