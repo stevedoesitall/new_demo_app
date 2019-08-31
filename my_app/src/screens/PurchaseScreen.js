@@ -6,6 +6,8 @@ import { itemDetailsArray } from "../components/ItemFile.js";
 import tierMap from "../components/TierMap.js";
 import AsyncStorage from "@react-native-community/async-storage";
 
+//NOTE: Check the occassional "emptied card" double prompt
+
 let userTier;
 let userCart = [];
 
@@ -199,9 +201,10 @@ const PurchaseScreen = () => {
           return false;
         }
         else {
-          let totalItems = userCart.length;
+          let totalItems = 0;
           let totalPurchaseValue = 0;
           userCart.forEach(cartItem => {
+            totalItems = totalItems + cartItem.qty;
             totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.price);
           });
           alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
@@ -228,7 +231,7 @@ const PurchaseScreen = () => {
         <View style={styles.view}>
         <Text style={styles.header}>Make a Purchase</Text>
         <Text style={styles.subhead}>
-          <Text style={styles.label}>Number of Items in Cart: </Text> 
+          <Text style={styles.label}>Unique Products in Cart: </Text> 
             {currentCartLength}</Text>
         <Text style={styles.subhead}>
           <Text style={styles.label}>Total Value of Cart: </Text> 
