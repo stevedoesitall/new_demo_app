@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, Button } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
+import tierMap from "../components/TierMap.js";
 
 const topLevel = "Diamond";
 let userLTV;
@@ -76,21 +77,21 @@ const AboutScreen = () => {
             }
             else {
                 userId = "EXAMPLEID";
-            }
+            };
 
             if (userEmailValue) {
                 userEmail = userEmailValue;
             }
             else {
                 userEmail = "email@example.com";
-            }
+            };
 
             if (appInstallDateValue) {
                 appInstallDate = appInstallDateValue;
             }
             else {
                 appInstallDate = "Unknown";
-            }
+            };
 
             const capitalizedPrefs = currentAlertPrefs.charAt(0).toUpperCase() + currentAlertPrefs.slice(1);
 
@@ -102,39 +103,6 @@ const AboutScreen = () => {
         };
 
       getLtvAndTier = async () => {
-
-        const tierMap = [
-            {
-            status: "Diamond",
-            points: 5000, 
-            level: 5,
-            hex: "#1DACD6"
-            },
-            {
-            status: "Platinum",
-            points: 1000, 
-            level: 4,
-            hex: "#A7b0C0"
-            },
-            {
-            status: "Gold",
-            points: 500, 
-            level: 3,
-            hex: "#D4AF37"
-            },
-            {
-            status: "Silver",
-            points: 100, 
-            level: 2,
-            hex: "#AAA9AD"
-            },
-            {
-            status: "Bronze",
-            points: 0, 
-            level: 1,
-            hex: "#B08D57"
-            }
-        ];
 
         let values;
 

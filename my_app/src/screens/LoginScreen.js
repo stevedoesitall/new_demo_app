@@ -73,7 +73,9 @@ const getUserKeys = (email) => {
     "last_app_login_date" : lastAppLoginDate
   };
 
-  alert(`You are logged in. Your user ID is: ${userId}`);
+  if (prodMode == true) {
+    alert(`You are logged in. Your user ID is: ${userId}`);
+  };
 
   storeUserData(userEmail, userId);
   getInstallDate();
@@ -93,8 +95,8 @@ const emailValidator = (nav, email) => {
     getUserKeys(email);
   }
   else {
-    alert("You must provide a valid email address."); //Note: Add error styling
     if (prodMode == true) {
+      alert("You must provide a valid email address."); //Note: Add error styling
       return false;
     }
   }

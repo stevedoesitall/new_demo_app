@@ -17,7 +17,7 @@ const EventScreen = () => {
     <Text style={styles.header}>Rate the App</Text>
     <FlatList
       keyExtractor={(rating) => {
-        return rating.name;
+        return rating.value.toString();
       }}
       data={ratings}
       renderItem={( {item} ) => {

@@ -51,11 +51,13 @@ const styles = StyleSheet.create({
         height: 300
     },
     buttonRow: {
+        justifyContent: "center",
         flexDirection: "row",
-        marginLeft: 20,
+        marginLeft: 10,
         marginTop: 10
     },
     pickerStylesVisible: {
+        alignSelf: "center",
         width: 100
     },
     pickerStylesHidden: {
