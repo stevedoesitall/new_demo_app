@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Button, FlatList, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import PurchaseDetails from "../components/PurchaseComp.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
@@ -10,7 +10,7 @@ let userTier;
 let userCart = [];
 
 const PurchaseScreen = () => {
-
+    
     const getCart = async () => {
         try {
           const value = await AsyncStorage.getItem("@current_cart");
@@ -33,7 +33,7 @@ const PurchaseScreen = () => {
         try {
           const value = await AsyncStorage.getItem("@user_ltv");
           if (value) {
-            userLTV = value;
+            userLTV = parseInt(value);
           }
           else {
             userLTV = 0;
@@ -74,7 +74,7 @@ const PurchaseScreen = () => {
       const storeLTV = async (totalPurchaseValue) => {
         const userLTV = totalPurchaseValue + parseInt(lifetimeValue);
         try {
-          await AsyncStorage.setItem("@user_ltv", userLTV);
+          await AsyncStorage.setItem("@user_ltv", (userLTV).toString());
           lifetimeValueTicker(userLTV);
           storeTier(userLTV);
         } catch (e) {

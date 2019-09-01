@@ -19,10 +19,10 @@ let membershipHex;
 const AboutScreen = () => {
 
     const resetStatus = async () => {
-        const userLTVPair = ["@user_ltv", 0];
+        const userLTVPair = ["@user_ltv", (0).toString()];
         const userTierPair = ["@user_tier", "Bronze"];
         const userAlertPair = ["@alert_preferences", "daily"];
-        const userPrefPair = ["@push_subscribed", false];
+        const userPrefPair = ["@push_subscribed", (false).toString()];
         const userIdPair = ["@user_id", ""];
         const userEmailPair = ["@user_email", ""];
         const userAppInstallDate = ["@app_install_date", ""];
@@ -58,7 +58,7 @@ const AboutScreen = () => {
             const userEmailValue = values[3][1];
             const appInstallDateValue = values[4][1];
 
-            if (userPushValue && userPushValue != false) {
+            if (userPushValue && userPushValue != "false") {
                 currentPushPref = true;
             }
             else {
@@ -121,7 +121,7 @@ const AboutScreen = () => {
         setMembershipTier(userTier);
 
         if (userLtvValue) {
-            userLTV = userLtvValue;
+            userLTV = parseInt(userLtvValue);
         }
         lifetimeValueTicker(userLTV);
  

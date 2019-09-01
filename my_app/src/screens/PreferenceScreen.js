@@ -23,7 +23,7 @@ const PreferenceScreen = () => {
         const userAlertValue = values[0][1];
         const userPushValue = values[1][1];
 
-        if (userPushValue && userPushValue != false) {
+        if (userPushValue && userPushValue != "false") {
             currentPushPref = true;
         }
         else {
@@ -45,7 +45,7 @@ const PreferenceScreen = () => {
 
   const storeData = async (item, newValue) => {
     try {
-      await AsyncStorage.setItem(item, newValue);
+      await AsyncStorage.setItem(item, (newValue).toString());
     } catch (e) {
       alert(`Something went wrong with storeData(): ${e}`);
     }
@@ -65,7 +65,7 @@ const PreferenceScreen = () => {
 
     attrMap.push_subscribed = newValue;
     pushToggle(newValue);
-    storeData("@push_subscribed", newValue);
+    storeData("@push_subscribed", (newValue).toString());
 
     let successBlurb;
 
@@ -96,7 +96,7 @@ const PreferenceScreen = () => {
     if (value != attrMap.alert_prefs) {
       attrMap.alert_prefs = value;
       alertToggle(value);
-      storeData("@alert_preferences", value);
+      storeData("@alert_preferences", (value).toString());
       
       Alert.alert(
         "Success",

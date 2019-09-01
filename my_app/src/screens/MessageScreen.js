@@ -1,11 +1,12 @@
 import React from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 // Follow this doc on how to implement a Message Stream: 
 // https://docs.mobile.sailthru.com/docs/developing-a-custom-message-stream
 
 const MessageScreen = () => {
+
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Your Message Center</Text>

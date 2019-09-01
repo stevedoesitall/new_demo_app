@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Button, Image, FlatList, TouchableOpacity } from "react-native";
+import { Text, View, Image, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import { testSectionCommerce, testSectionMedia } from "../components/ItemFile.js";
 
@@ -9,6 +9,7 @@ import { testSectionCommerce, testSectionMedia } from "../components/ItemFile.js
 // Add functionality to view impression, click, and pageview
 
 const RecsScreen = () => {
+
   const [vertical, setVertical] = useState("Commerce");
   const [algorithm, setAlgo] = useState("Interest");
 

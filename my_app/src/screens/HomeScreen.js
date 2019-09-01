@@ -1,11 +1,15 @@
 import React from "react";
-import { Text, View, Button, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 const HomeScreen = (props) => {
+
   const nav = props.navigation;
+
   return (
+
   <View style={styles.view}>
+    
     <Text style={styles.header}>Hello!</Text>
     {/* <Image
       style={styles.logoImage}
