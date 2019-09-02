@@ -1,6 +1,12 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    divider: {
+        color: "black",
+        fontSize: 20,
+        fontFamily: "Futura",
+        marginLeft: 4
+    },
     view: {
         alignItems: "center",
         justifyContent: "space-around",
@@ -157,7 +163,7 @@ const styles = StyleSheet.create({
         color: "rgb(0, 102, 204)",
         fontSize: 20,
         fontFamily: "Futura",
-        marginLeft: 5
+        marginLeft: 4
     },
     textButtonLogin: {
         color: "rgb(0, 124, 170)",

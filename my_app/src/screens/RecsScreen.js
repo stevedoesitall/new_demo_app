@@ -32,7 +32,7 @@ const RecsScreen = () => {
     <Text style={styles.header}>Recommended for You</Text>
     <Text style={styles.subhead}>Showing {vertical} {algorithm} Recs</Text>
     <View style={styles.buttonRow}>
-        <Text style={styles.label}>Choose Algorithm:</Text>
+        <Text style={styles.label}>Algorithm:</Text>
         <TouchableOpacity
           onPress={() => {
             setAlgo("Interest");
@@ -40,6 +40,7 @@ const RecsScreen = () => {
         >
           <Text style={styles.textButton}>Interest</Text>
         </TouchableOpacity>
+        <Text style={styles.divider}>|</Text>
         <TouchableOpacity
           onPress={() => {
             setAlgo("Random");
@@ -49,7 +50,7 @@ const RecsScreen = () => {
         </TouchableOpacity>
     </View>
     <View style={styles.buttonRow}>
-        <Text style={styles.label}>Choose Vertical:</Text>
+        <Text style={styles.label}>Vertical:</Text>
         <TouchableOpacity
           onPress={() => {
             setVertical("Media");
@@ -57,6 +58,7 @@ const RecsScreen = () => {
         >
           <Text style={styles.textButton}>Media</Text>
         </TouchableOpacity>
+        <Text style={styles.divider}>|</Text>
         <TouchableOpacity
           onPress={() => {
             setVertical("Commerce");

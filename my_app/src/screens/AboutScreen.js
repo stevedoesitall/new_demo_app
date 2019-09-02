@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import tierMap from "../components/TierMap.js";
 
+//Note to add a ST var for list status and display newsletter preference module
+
 const topLevel = "Diamond";
 let userLTV;
 let appInstallDate;
@@ -14,31 +16,88 @@ let userId;
 let userEmail;
 let membershipHex;
 let followingTopics;
-
-
-//Note to add a ST var for list status and display newsletter preference module
+let pleaseReset;
+let subs = [];
 
 const AboutScreen = () => {
+
+    const getFollowing = async () => {
+        try {
+          const value = await AsyncStorage.getItem("@following_topics");
+          if (value) {
+            subs = [];
+            const valueArray = value.split(",");
+            if (valueArray.length > 0) {
+              valueArray.forEach(topic => {
+                if (!subs.includes(topic)) {
+                  subs.push(topic);
+                }
+              });
+            }
+          }
+          else {
+            subs = [];
+          }
+        } catch(e) {
+          alert(`Something went wrong with getFollowing(): ${e}`);
+        }
+      };
+
+    getFollowing();
+
+    // const topicReducer = (state, action) => {
+    //     switch (action.type) {
+    //       case "subscribe":
+    //         return state.map(topic => {
+    //           if (topic.name == action.id) {
+    //             return {...topic, subStatus: true}
+    //           }
+    //           else {
+    //             return topic;
+    //           }
+    //       });
+    //       case "unsubscribe":
+    //           return state.map(topic => {
+    //             if (topic.name == action.id) {
+    //               return {...topic, subStatus: false}
+    //             }
+    //             else {
+    //               return topic;
+    //             }
+    //       });
+    //       default:
+    //         return state;
+    //     }
+    //   };
+      
+    //   const [topics, dispatch] = useReducer(
+    //     topicReducer, 
+    //     currentTopicSubs
+    //   );
 
     const resetStatus = async () => {
         const userLTVPair = ["@user_ltv", (0).toString()];
         const userTierPair = ["@user_tier", "Bronze"];
-        const userAlertPair = ["@alert_preferences", "daily"];
+        // const userAlertPair = ["@alert_preferences", "daily"];
         const userPrefPair = ["@push_subscribed", (false).toString()];
         const userIdPair = ["@user_id", ""];
         const userEmailPair = ["@user_email", ""];
         const userAppInstallDate = ["@app_install_date", ""];
-        const userFollowingTopics = ["@following_topics", ""];
+        // const userFollowingTopics = ["@following_topics", ""];
+
+        pleaseReset = true;
+
+        setMembershipTier("Bronze");
+        lifetimeValueTicker(0);
+        pushToggle(true);
+        // alertToggle("daily");
+        setId("EXAMPLEID");
+        setEmail("email@example.com");
+        setAppInstallDate("UNKNOWN");
+        // setFollowingTopics("");
 
         try {
-          await AsyncStorage.multiSet([userLTVPair, userTierPair, userAlertPair, userPrefPair, userEmailPair, userIdPair, userAppInstallDate, userAppInstallDate]);
-          setMembershipTier("Bronze");
-          lifetimeValueTicker(0);
-          pushToggle(true);
-          alertToggle("daily");
-          setId("EXAMPLEID");
-          setEmail("email@example.com");
-          setAppInstallDate("UNKNOWN");
+          await AsyncStorage.multiSet([userLTVPair, userTierPair, userPrefPair, userEmailPair, userIdPair, userAppInstallDate, userAppInstallDate]);
 
         } catch (e) {
           alert(`Something went wrong with resetStatus(): ${e}`);
@@ -98,9 +157,13 @@ const AboutScreen = () => {
 
         if (followingTopicsValue) {
             followingTopics = followingTopicsValue;
+            // const followingTopicsArray = followingTopicsValue.split(",");
+            // followingTopicsArray.forEach(topic => {
+            //     topics.push(topic);
+            // });
         }
         else {
-            followingTopics = "None";
+            followingTopics = "";
         }
 
         const capitalizedPrefs = currentAlertPrefs.charAt(0).toUpperCase() + currentAlertPrefs.slice(1);
@@ -187,8 +250,8 @@ const AboutScreen = () => {
             <Text style={styles.label}>Alert Frequency: </Text> 
         {currentPushValue ? currentAlertValue : "N/A"}</Text>
         <Text style={styles.subhead}>
-            <Text style={styles.label}>Following Topics: </Text> 
-        {currentPushValue ? currentFollowingTopics : "N/A"}</Text>
+            <Text style={styles.label}>Total Following Topics: </Text> 
+        {currentPushValue ? subs.length : "N/A"}</Text>
         <Text style={styles.subhead}>
             <Text style={styles.label}>Total Purchase Amount: </Text> 
         ${(lifetimeValue/100).toFixed(2)}</Text>
@@ -211,4 +274,4 @@ const AboutScreen = () => {
     );
 };
 
-export default AboutScreen;
+export { AboutScreen, pleaseReset };

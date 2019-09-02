@@ -2,15 +2,16 @@ import React, { useReducer, useState } from "react";
 import { Text, View, Switch, PickerIOS, Alert, FlatList, TouchableOpacity, Button } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
+import allTopics from "../components/TopicsArray.js";
+import { pleaseReset } from "./AboutScreen";
 
 //Set a ListSub Var in ST for managing email prefs; do a get to check current email status
-
-const allTopics = ["media", "politics", "tech"];
 
 let currentAlertPrefs;
 let currentPushPref;
 let subs = [];
 
+//This will run as sooon as the app is loaded and every time the preference center page is opened
 const getFollowing = async () => {
   try {
     const value = await AsyncStorage.getItem("@following_topics");
@@ -32,6 +33,8 @@ const getFollowing = async () => {
 getFollowing();
 
 const PreferenceScreen = () => {
+
+  let swapStatus;
 
   const currentTopicSubs = [];
 
@@ -117,13 +120,14 @@ const PreferenceScreen = () => {
     let values;
 
     try {
-        values = await AsyncStorage.multiGet(["@alert_preferences", "@push_subscribed"]);
+        values = await AsyncStorage.multiGet(["@alert_preferences", "@push_subscribed", "@following_topics"]);
     } catch(e) {
         alert(`Something went wrong with getPrefsAndAlert(): ${e}`);
     }  
 
       const userAlertValue = values[0][1];
       const userPushValue = values[1][1];
+      // const userPushValue = values[1][1];
 
       if (userPushValue && userPushValue != "false") {
         currentPushPref = true;
@@ -155,6 +159,7 @@ const PreferenceScreen = () => {
 
   const [currentPushValue, pushToggle] = useState(currentPushPref);
   const [currentAlertValue, alertToggle] = useState(currentAlertPrefs);
+  // const [currentFollowingValue, followingToggle] = useState(currentFollowingPrefs);
 
   let attrMap = {};
   // let attrMap = new Carnival.AttributeMap();
@@ -162,7 +167,8 @@ const PreferenceScreen = () => {
   attrMap.push_subscribed = currentPushValue;
   attrMap.alert_prefs = currentAlertValue;
 
-  const alertSwitch = (currentPushValue) => {    
+  const alertSwitch = (currentPushValue) => {
+
     const newValue = !currentPushValue;
 
     attrMap.push_subscribed = newValue;
@@ -293,7 +299,6 @@ const PreferenceScreen = () => {
       }}
     />
   </View>
-  );
-};
+  );};
 
 export default PreferenceScreen;
