@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { View, Text, Image, TouchableOpacity, PickerIOS } from "react-native";
 import styles from "../components/StyleSheet.js";
 
-
 //Next task: Create a callback that saves/updates the default 0 qty state
 class PurchaseDetails extends Component {
     constructor(props) {
@@ -47,6 +46,6 @@ class PurchaseDetails extends Component {
             </View>
         );
     }
-}
+};
 
 export default PurchaseDetails;

@@ -13,6 +13,8 @@ let currentPushPref;
 let userId;
 let userEmail;
 let membershipHex;
+let followingTopics;
+
 
 //Note to add a ST var for list status and display newsletter preference module
 
@@ -26,9 +28,10 @@ const AboutScreen = () => {
         const userIdPair = ["@user_id", ""];
         const userEmailPair = ["@user_email", ""];
         const userAppInstallDate = ["@app_install_date", ""];
+        const userFollowingTopics = ["@following_topics", ""];
 
         try {
-          await AsyncStorage.multiSet([userLTVPair, userTierPair, userAlertPair, userPrefPair, userEmailPair, userIdPair, userAppInstallDate]);
+          await AsyncStorage.multiSet([userLTVPair, userTierPair, userAlertPair, userPrefPair, userEmailPair, userIdPair, userAppInstallDate, userAppInstallDate]);
           setMembershipTier("Bronze");
           lifetimeValueTicker(0);
           pushToggle(true);
@@ -42,64 +45,72 @@ const AboutScreen = () => {
         }
       };
 
-      getUserData = async () => {
+      const getUserData = async () => {
 
         let values
         try {
-            values = await AsyncStorage.multiGet(["@alert_preferences", "@push_subscribed", "@user_id", "@user_email", "@app_install_date"]);
+            values = await AsyncStorage.multiGet(["@alert_preferences", "@push_subscribed", "@user_id", "@user_email", "@app_install_date", "@following_topics"]);
         } catch(e) {
             alert(`Something went wrong with getUserData(): ${e}`);
         }
-        console.log(values)
       
-            const userAlertValue = values[0][1];
-            const userPushValue = values[1][1];
-            const userIdValue = values[2][1];
-            const userEmailValue = values[3][1];
-            const appInstallDateValue = values[4][1];
+        const userAlertValue = values[0][1];
+        const userPushValue = values[1][1];
+        const userIdValue = values[2][1];
+        const userEmailValue = values[3][1];
+        const appInstallDateValue = values[4][1];
+        const followingTopicsValue = values[5][1];
 
-            if (userPushValue && userPushValue != "false") {
-                currentPushPref = true;
+        if (userPushValue && userPushValue != "false") {
+            currentPushPref = true;
+        }
+        else {
+            currentPushPref = false;
+        };
+
+        if (userAlertValue) {
+            currentAlertPrefs = userAlertValue;
             }
-            else {
-                currentPushPref = false;
-            };
+        else {
+            currentAlertPrefs = "daily";
+        };
 
-            if (userAlertValue) {
-                currentAlertPrefs = userAlertValue;
-                }
-            else {
-                currentAlertPrefs = "daily";
-            };
+        if (userIdValue) {
+            userId = userIdValue;
+        }
+        else {
+            userId = "EXAMPLEID";
+        };
 
-            if (userIdValue) {
-                userId = userIdValue;
-            }
-            else {
-                userId = "EXAMPLEID";
-            };
+        if (userEmailValue) {
+            userEmail = userEmailValue;
+        }
+        else {
+            userEmail = "email@example.com";
+        };
 
-            if (userEmailValue) {
-                userEmail = userEmailValue;
-            }
-            else {
-                userEmail = "email@example.com";
-            };
+        if (appInstallDateValue) {
+            appInstallDate = appInstallDateValue;
+        }
+        else {
+            appInstallDate = "Unknown";
+        };
 
-            if (appInstallDateValue) {
-                appInstallDate = appInstallDateValue;
-            }
-            else {
-                appInstallDate = "Unknown";
-            };
+        if (followingTopicsValue) {
+            followingTopics = followingTopicsValue;
+        }
+        else {
+            followingTopics = "None";
+        }
 
-            const capitalizedPrefs = currentAlertPrefs.charAt(0).toUpperCase() + currentAlertPrefs.slice(1);
+        const capitalizedPrefs = currentAlertPrefs.charAt(0).toUpperCase() + currentAlertPrefs.slice(1);
 
-            pushToggle(currentPushPref);
-            alertToggle(capitalizedPrefs);
-            setId(userId);
-            setEmail(userEmail);
-            setAppInstallDate(appInstallDate);
+        pushToggle(currentPushPref);
+        alertToggle(capitalizedPrefs);
+        setId(userId);
+        setEmail(userEmail);
+        setAppInstallDate(appInstallDate);
+        setFollowingTopics(followingTopics);
         };
 
       getLtvAndTier = async () => {
@@ -153,7 +164,8 @@ const AboutScreen = () => {
     const [nextLevel, setNextLevel] = useState("Bronze");
     const [currentUserId, setId] = useState(userId);
     const [currentUserEmail, setEmail] = useState(userEmail);
-    const [currentAppInstallDate, setAppInstallDate] = useState(userEmail);
+    const [currentAppInstallDate, setAppInstallDate] = useState(appInstallDate);
+    const [currentFollowingTopics, setFollowingTopics] = useState(followingTopics);
 
     return (
 
@@ -174,6 +186,9 @@ const AboutScreen = () => {
         <Text style={styles.subhead}>
             <Text style={styles.label}>Alert Frequency: </Text> 
         {currentPushValue ? currentAlertValue : "N/A"}</Text>
+        <Text style={styles.subhead}>
+            <Text style={styles.label}>Following Topics: </Text> 
+        {currentPushValue ? currentFollowingTopics : "N/A"}</Text>
         <Text style={styles.subhead}>
             <Text style={styles.label}>Total Purchase Amount: </Text> 
         ${(lifetimeValue/100).toFixed(2)}</Text>

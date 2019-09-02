@@ -1,51 +1,153 @@
-import React, { useState } from "react";
-import { Text, View, Switch, PickerIOS, Alert } from "react-native";
+import React, { useReducer, useState } from "react";
+import { Text, View, Switch, PickerIOS, Alert, FlatList, TouchableOpacity, Button } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 
+//Set a ListSub Var in ST for managing email prefs; do a get to check current email status
+
+const allTopics = ["media", "politics", "tech"];
+
 let currentAlertPrefs;
 let currentPushPref;
+let subs = [];
 
-//Set a ListSub Var in ST for managing email prefs; do a get to check current email status
+const getFollowing = async () => {
+  try {
+    const value = await AsyncStorage.getItem("@following_topics");
+    if (value) {
+      const valueArray = value.split(",");
+      if (valueArray.length > 0) {
+        valueArray.forEach(topic => {
+          if (!subs.includes(topic)) {
+            subs.push(topic);
+          }
+        });
+      }
+    }
+  } catch(e) {
+    alert(`Something went wrong with getFollowing(): ${e}`);
+  }
+};
+
+getFollowing();
 
 const PreferenceScreen = () => {
 
-  getPrefsAndAlert = async () => {
+  const currentTopicSubs = [];
 
-    let values
+  allTopics.forEach(topic => {
+    if (subs.includes(topic)) {
+      currentTopicSubs.push({name: topic, subStatus: true});
+    }
+    else {
+      currentTopicSubs.push({name: topic, subStatus: false});
+    }
+  });
+
+  const topicReducer = (state, action) => {
+    switch (action.type) {
+      case "subscribe":
+        return state.map(topic => {
+          if (topic.name == action.id) {
+            return {...topic, subStatus: true}
+          }
+          else {
+            return topic;
+          }
+      });
+      case "unsubscribe":
+          return state.map(topic => {
+            if (topic.name == action.id) {
+              return {...topic, subStatus: false}
+            }
+            else {
+              return topic;
+            }
+      });
+      default:
+        return state;
+    }
+  };
+  
+  const [topics, dispatch] = useReducer(
+    topicReducer, 
+    currentTopicSubs
+  );
+
+  const storeFollowing = async (topic) => {
+    if (!subs.includes(topic)) {
+      subs.push(topic);
+    }
+    try {
+      await AsyncStorage.setItem("@following_topics", (subs).toString());
+    } catch (e) {
+      alert(`Something went wrong with storeLTV(): ${e}`);
+    }
+  };
+
+  const removeFollowing = async (topic) => {
+    subs = subs.filter(sub => sub != topic);
+    try {
+      await AsyncStorage.setItem("@following_topics", (subs).toString());
+    } catch (e) {
+      alert(`Something went wrong with storeLTV(): ${e}`);
+    }
+  };
+
+  const changeStatus = (topic) => {
+    if (topic.subStatus) {
+      removeFollowing(topic.name);
+    }
+    else {
+      storeFollowing(topic.name);
+    }
+    dispatch({ 
+      type: topic.subStatus ? "unsubscribe" : "subscribe", 
+      id: topic.name 
+    });
+  };
+
+  const capitalize = (s) => {
+    if (typeof s !== "string") return ""
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  };
+
+  const getPrefsAndAlert = async () => {
+
+    let values;
+
     try {
         values = await AsyncStorage.multiGet(["@alert_preferences", "@push_subscribed"]);
     } catch(e) {
         alert(`Something went wrong with getPrefsAndAlert(): ${e}`);
-    }
-    console.log(values)
-  
-        const userAlertValue = values[0][1];
-        const userPushValue = values[1][1];
+    }  
 
-        if (userPushValue && userPushValue != "false") {
-            currentPushPref = true;
-        }
-        else {
-            currentPushPref = false;
-        };
+      const userAlertValue = values[0][1];
+      const userPushValue = values[1][1];
 
-        if (userAlertValue) {
-            currentAlertPrefs = userAlertValue;
-            }
-        else {
-            currentAlertPrefs = "daily";
-        };
+      if (userPushValue && userPushValue != "false") {
+        currentPushPref = true;
+      }
+      else {
+        currentPushPref = false;
+      };
 
-        pushToggle(currentPushPref);
-        alertToggle(currentAlertPrefs);
+      if (userAlertValue) {
+        currentAlertPrefs = userAlertValue;
+      }
+      else {
+        currentAlertPrefs = "daily";
+      };
+
+      pushToggle(currentPushPref);
+      alertToggle(currentAlertPrefs);
     };
 
   getPrefsAndAlert();
 
-  const storeData = async (item, newValue) => {
+  const storeData = async (item, topic) => {
     try {
-      await AsyncStorage.setItem(item, (newValue).toString());
+      await AsyncStorage.setItem(item, topic);
     } catch (e) {
       alert(`Something went wrong with storeData(): ${e}`);
     }
@@ -118,18 +220,33 @@ const PreferenceScreen = () => {
 
   let pickerStyle;
   let preferencesStyle;
+  let listStyle;
 
   if (currentPushValue == true) {
     pickerStyle = styles.pickerStylesVisible;
     preferencesStyle = styles.preferencesStyleVisible;
+    listStyle = styles.listStyleVisible;
   }
   else {
     pickerStyle = styles.pickerStylesHidden;
     preferencesStyle = styles.preferencesStyleHidden
+    listStyle = styles.listStyleHidden;
   };
+
+  // const resetTopics = async () => {
+  //   try {
+  //     await AsyncStorage.setItem("@following_topics", "");
+  //   } catch (e) {
+  //     alert(`Something went wrong with resetTopics(): ${e}`);
+  //   }
+  // };
 
   return (
   <View style={styles.view}>
+    {/* <Button
+      title="Reset"
+      onPress={()=> resetTopics()}
+    /> */}
     <Text style={styles.header}>Your Preference Center</Text>
     <Text style={styles.subhead}><Text style={styles.label}>Current Status:</Text> {currentPushValue ? "Subscribed" : "Unsubscribed"}</Text>
     
@@ -156,6 +273,25 @@ const PreferenceScreen = () => {
       <PickerIOS.Item label="Realtime" value="realtime" />
 
     </PickerIOS>
+
+    <Text style={preferencesStyle}>Select Topics to Follow:</Text>
+    <FlatList
+      style={listStyle}
+      keyExtractor={(topic => {
+        return topic.name
+      })}
+      data={topics}
+      renderItem={( {item} ) => {
+          return (
+            <View style={styles.view}>
+              <TouchableOpacity 
+                onPress={() => changeStatus(item)}>
+                  <Text style={item.subStatus ? styles.subButton : styles.unsubButton}>{capitalize(item.name)}</Text>
+              </TouchableOpacity>
+            </View>
+          )
+      }}
+    />
   </View>
   );
 };

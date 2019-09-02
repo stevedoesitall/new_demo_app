@@ -20,6 +20,7 @@ const LoginScreen = (props) => {
       style={styles.input}
       autoCapitalize="none"
       autoCorrect={false}
+      keyboardType="email-address"
       value={email}
       onChangeText={(userEmail) => setEmail(userEmail)}
     />
@@ -33,6 +34,15 @@ const LoginScreen = (props) => {
       onPress={() => emailValidator(nav, email)}
     >
       <Text style={styles.customButton}>Submit</Text>
+    </TouchableOpacity>
+    
+    <TouchableOpacity
+          onPress={() => {
+            storeUserData("", "");
+            nav.navigate("Home");
+          }}
+        >
+          <Text style={styles.textButtonLogin}>Or continue without logging in</Text>
     </TouchableOpacity>
 
   </View>

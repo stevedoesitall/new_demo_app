@@ -262,14 +262,14 @@ const PurchaseScreen = () => {
             data={itemDetailsArray}
             renderItem={( {item} ) => {
                 return (
-                    <View style={styles.view}>
-                        <PurchaseDetails
-                            title={item.title}
-                            image={item.image}
-                            price={item.price}
-                            updateFunc={(qty) => updateCart(qty, item)}
-                        />
-                    </View>
+                  <View style={styles.view}>
+                      <PurchaseDetails
+                          title={item.title}
+                          image={item.image}
+                          price={item.price}
+                          updateFunc={(qty) => updateCart(qty, item)}
+                      />
+                  </View>
                 )
             }}
         />

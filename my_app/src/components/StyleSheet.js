@@ -12,6 +12,19 @@ const styles = StyleSheet.create({
         fontFamily: "Futura",
         fontWeight: "900"
     },
+    listStyleVisible: {
+ 
+    },
+    listStyleHidden: {
+        height: 0,
+        width: 0
+    },
+    header: {
+        fontSize: 28,
+        marginBottom: 20,
+        fontFamily: "Futura",
+        fontWeight: "900"
+    },
     purchaseImage: {
         height: 250,
         width: 350,
@@ -112,14 +125,54 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: "Futura"
     },
+    subButton: {
+        textAlign: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(0, 153, 0)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 10,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        fontSize: 20,
+        fontFamily: "Futura",
+        width: 160
+    },
+    unsubButton: {
+        textAlign: "center",
+        justifyContent: "center",
+        backgroundColor: "rgb(211, 211, 211)",
+        color: "white",
+        borderRadius: 12,
+        marginTop: 10,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 2,
+        fontSize: 20,
+        fontFamily: "Futura",
+        width: 160
+    },
     textButton: {
         color: "rgb(0, 102, 204)",
         fontSize: 20,
         fontFamily: "Futura",
         marginLeft: 5
-    },  
+    },
+    textButtonLogin: {
+        color: "rgb(0, 124, 170)",
+        fontSize: 15,
+        fontFamily: "Futura",
+        marginLeft: 5,
+        marginTop: 15
+    },   
     toHome: {
         width: 300
+    },
+    toPref: {
+        justifyContent: "center",
+        width: 130,
+        marginLeft: 10
     },
     resetButton: {
         alignItems: "center",
