@@ -3,7 +3,6 @@ import { Text, View, Switch, PickerIOS, Alert, FlatList, TouchableOpacity, Butto
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import allTopics from "../components/TopicsArray.js";
-import { pleaseReset } from "./AboutScreen";
 
 //Set a ListSub Var in ST for managing email prefs; do a get to check current email status
 

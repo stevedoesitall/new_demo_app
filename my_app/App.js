@@ -6,7 +6,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import RecsScreen from "./src/screens/RecsScreen";
 import PreferenceScreen from "./src/screens/PreferenceScreen";
 import MessageScreen from "./src/screens/MessageScreen";
-import { AboutScreen } from "./src/screens/AboutScreen";
+import AboutScreen from "./src/screens/AboutScreen";
 
 const navigator = createStackNavigator(
   {

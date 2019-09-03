@@ -45,36 +45,6 @@ const AboutScreen = () => {
 
     getFollowing();
 
-    // const topicReducer = (state, action) => {
-    //     switch (action.type) {
-    //       case "subscribe":
-    //         return state.map(topic => {
-    //           if (topic.name == action.id) {
-    //             return {...topic, subStatus: true}
-    //           }
-    //           else {
-    //             return topic;
-    //           }
-    //       });
-    //       case "unsubscribe":
-    //           return state.map(topic => {
-    //             if (topic.name == action.id) {
-    //               return {...topic, subStatus: false}
-    //             }
-    //             else {
-    //               return topic;
-    //             }
-    //       });
-    //       default:
-    //         return state;
-    //     }
-    //   };
-      
-    //   const [topics, dispatch] = useReducer(
-    //     topicReducer, 
-    //     currentTopicSubs
-    //   );
-
     const resetStatus = async () => {
         const userLTVPair = ["@user_ltv", (0).toString()];
         const userTierPair = ["@user_tier", "Bronze"];
@@ -274,4 +244,4 @@ const AboutScreen = () => {
     );
 };
 
-export { AboutScreen, pleaseReset };
+export default AboutScreen
