@@ -83,7 +83,7 @@ const storeInstallDate = async () => {
 
 const getUserKeys = (email) => {
   const userEmail = email.toLowerCase();
-  const userId = Base64.encode(userEmail).substring(3,11).toUpperCase();
+  const userId = Base64.encode(userEmail).substring(11,19).toUpperCase();
   const lastAppLoginDate = getDate();
   const profileVars = {
     "last_app_login_date" : lastAppLoginDate
