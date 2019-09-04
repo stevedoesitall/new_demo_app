@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity, FlatList, Alert } from "react-native";
+import { Text, View, TouchableOpacity, FlatList, Alert, ScrollView } from "react-native";
 import styles from "../components/StyleSheet.js";
 
 const EventScreen = () => {
@@ -14,22 +14,26 @@ const EventScreen = () => {
 
   return (
   <View style={styles.view}>
-    <Text style={styles.header}>Rate the App</Text>
-    <FlatList
-      keyExtractor={(rating) => {
-        return rating.value.toString();
-      }}
-      data={ratings}
-      renderItem={( {item} ) => {
-        return (
+    <ScrollView
+        scrollEnabled={false}
+      >
+      <Text style={styles.header}>Rate the App</Text>
+      <FlatList
+        keyExtractor={(rating) => {
+          return rating.value.toString();
+        }}
+        data={ratings}
+        renderItem={( {item} ) => {
+          return (
 
-        <TouchableOpacity onPress={() => triggerEvent(item)}>
-            <Text style={styles[item.style]}>{item.name}</Text>
-        </TouchableOpacity>
-          
-        );
-      }}
-    />
+          <TouchableOpacity onPress={() => triggerEvent(item)}>
+              <Text style={styles[item.style]}>{item.name}</Text>
+          </TouchableOpacity>
+            
+          );
+        }}
+      />
+    </ScrollView>
   </View>
   );
 };
