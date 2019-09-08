@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity, FlatList, Alert, ScrollView } from "react-native";
 import styles from "../components/StyleSheet.js";
+import Carnival from "react-native-carnival";
 
 const EventScreen = () => {
 
@@ -56,6 +57,7 @@ const triggerEvent = (rating) => {
     ],
   );
 
+  Carnival.logEvent(eventName, eventVars);
 };
 
 export default EventScreen;

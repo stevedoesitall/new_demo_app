@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import PurchaseDetails from "../components/PurchaseComp.js";
-import { itemDetailsArray } from "../components/ItemFile.js";
+import { itemRecs } from "../components/ItemFile.js";
 import tierMap from "../components/TierMap.js";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -256,10 +256,10 @@ const PurchaseScreen = () => {
         <Text style={styles.customButton}>Empty Your Cart</Text>
         </TouchableOpacity>
         <FlatList
-            keyExtractor={(testItem => {
-                return testItem.sku
+            keyExtractor={(item => {
+                return item.sku
             })}
-            data={itemDetailsArray}
+            data={itemRecs}
             renderItem={( {item} ) => {
                 return (
                   <View style={styles.view}>

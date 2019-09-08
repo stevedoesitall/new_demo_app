@@ -79,6 +79,56 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: 10
     },
+    messageActions: {
+        marginLeft: 5,
+        fontFamily: "Futura",
+        fontSize: 10
+    }, 
+    messageImage: {
+        height: 100,
+        width: 100,
+        marginBottom: 10
+    },
+    messageTextRead: {
+        marginBottom: 5,
+        fontFamily: "Futura",
+        fontSize: 20,
+        alignSelf: "center"
+    },  
+    messageTextUnread: {
+        marginBottom: 5,
+        fontFamily: "Futura",
+        fontSize: 20,
+        alignSelf: "center"
+    },  
+    messageTitleRead: {
+        marginBottom: 5,
+        fontFamily: "Futura",
+        fontSize: 25,
+        alignSelf: "center"
+    },
+    messageTitleUnread: {
+        marginBottom: 5,
+        fontFamily: "Futura",
+        fontSize: 25,
+        alignSelf: "center"
+    },
+    messagesRead: {
+        borderColor: "black",
+        borderWidth: 1,
+        width: 400,
+        backgroundColor: "white"
+    },
+    messagesUnread: {
+        borderColor: "black",
+        borderWidth: 1,
+        width: 400,
+        backgroundColor: "rgb(0, 124, 170)"
+    },
+    messagesHidden: {
+        height: 0,
+        width: 0
+    },
     pickerStylesVisible: {
         alignSelf: "center",
         fontFamily: "Futura",
@@ -111,6 +161,14 @@ const styles = StyleSheet.create({
         marginTop: 40,
         fontFamily: "Futura",
         fontSize: 25,
+        fontWeight: "900",
+        alignSelf: "center"
+    },
+    recTitleTwo: {
+        marginBottom: 5,
+        marginTop: 40,
+        fontFamily: "Futura",
+        fontSize: 20,
         fontWeight: "900",
         alignSelf: "center"
     },

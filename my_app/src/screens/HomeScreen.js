@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
+import Carnival from "react-native-carnival";
 
 const HomeScreen = (props) => {
+
+  const [userFirstName, setFirstName] = useState("Friend");
+
+  const getUserFields = () => { 
+    Carnival.getProfileVars().then(profileVars => {
+      setFirstName(profileVars.first_name);
+    }).catch(error => {
+      console.log(`${error}`);
+    });
+  };
+
+  getUserFields();
 
   const nav = props.navigation;
 
@@ -10,7 +23,7 @@ const HomeScreen = (props) => {
 
   <View style={styles.view}>
     
-    <Text style={styles.header}>Hello!</Text>
+    <Text style={styles.header}>Hello, {userFirstName}!</Text>
     {/* <Image
       style={styles.logoImage}
       resizeMode="contain"
@@ -31,13 +44,13 @@ const HomeScreen = (props) => {
     <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Purchase")}
     >
-      <Text style={styles.customButton}>Make a Purchase</Text>
+      <Text style={styles.customButton}>View Your Cart</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Recs")}
     >
-      <Text style={styles.customButton}>Recommended for You</Text>
+      <Text style={styles.customButton}>Recommended Articles</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={styles.toHome}

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, TextInput, Alert, Keyboard } from "react-native";
+import { Text, View, TouchableOpacity, TextInput, Keyboard } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import getDate from "../components/DateGenerator.js";
 import { Base64 } from "js-base64";
+import Carnival from "react-native-carnival";
  
 const LoginScreen = (props) => {
 
@@ -24,11 +25,6 @@ const LoginScreen = (props) => {
       value={email}
       onChangeText={(userEmail) => setEmail(userEmail)}
     />
-
-    {/* <Button
-      title="Submit"
-      onPress={() => emailValidator(nav, email)}
-    /> */}
 
     <TouchableOpacity
       onPress={() => emailValidator(nav, email)}
@@ -89,33 +85,18 @@ const getUserKeys = (email) => {
     "last_app_login_date" : lastAppLoginDate
   };
 
-  if (prodMode == true) {
-
-    // const successBlurb = `You are now logged in. Your User ID is ${userId}.`;
-
-    // Alert.alert(
-    //   "Thank You",
-    //   successBlurb,
-    //   [
-    //     {
-    //       text: "Dismiss",
-    //       onPress: () => Keyboard.dismiss()
-    //     }
-    //   ],
-    // );
-  };
 
   storeUserData(userEmail, userId);
   getInstallDate();
 
-  // Carnival.setUserEmail(userEmail);
-  // Carnival.setUserId(userId);
-  // Carnival.setProfileVars(profileVars).then(result => {
-  //   // Handle success
-  // }).catch(e => {
-  //   // Handle error
-  // });
+  Carnival.setUserEmail(userEmail);
+  Carnival.setUserId(userId);
 
+  Carnival.setProfileVars(profileVars).then(result => {
+    console.log(result);
+  }).catch(error => {
+    console.log(error);
+  });
 };
 
 const emailValidator = (nav, email) => {

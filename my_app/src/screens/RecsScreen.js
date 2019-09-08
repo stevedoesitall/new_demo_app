@@ -1,81 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, View, Image, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
-import { testSectionCommerce, testSectionMedia } from "../components/ItemFile.js";
-
-// May be a good use of SectionList
-// https://facebook.github.io/react-native/docs/sectionlist
+import { articleRecs } from "../components/ItemFile.js";
 
 // Add functionality to view impression, click, and pageview
 
 const RecsScreen = () => {
 
-  const [vertical, setVertical] = useState("Commerce");
-  const [algorithm, setAlgo] = useState("Interest");
-
-  let testSection;
-  let blurb;
-
-  if (vertical == "Commerce") {
-    testSection = testSectionCommerce;
-    blurb = "View Item";
-  }
-  else if (vertical == "Media") {
-    testSection = testSectionMedia;
-    blurb = "View Article";
-  };
-
-  const testSectionJSON = JSON.parse(testSection).recommendations;
-
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Recommended for You</Text>
-    <Text style={styles.subhead}>Showing {vertical} {algorithm} Recs</Text>
-    <View style={styles.buttonRow}>
-        <Text style={styles.label}>Algorithm:</Text>
-        <TouchableOpacity
-          onPress={() => {
-            setAlgo("Interest");
-          }}
-        >
-          <Text style={styles.textButton}>Interest</Text>
-        </TouchableOpacity>
-        <Text style={styles.divider}>|</Text>
-        <TouchableOpacity
-          onPress={() => {
-            setAlgo("Random");
-          }}
-        >
-          <Text style={styles.textButton}>Random</Text>
-        </TouchableOpacity>
-    </View>
-    <View style={styles.buttonRow}>
-        <Text style={styles.label}>Vertical:</Text>
-        <TouchableOpacity
-          onPress={() => {
-            setVertical("Media");
-          }}
-        >
-          <Text style={styles.textButton}>Media</Text>
-        </TouchableOpacity>
-        <Text style={styles.divider}>|</Text>
-        <TouchableOpacity
-          onPress={() => {
-            setVertical("Commerce");
-          }}
-        >
-          <Text style={styles.textButton}>Commerce</Text>
-        </TouchableOpacity>
-    </View>
     <FlatList
-      keyExtractor={(testItem) => {
-        return testItem.url;
+      keyExtractor={(title) => {
+        return title.url;
       }}
-      data={testSectionJSON}
+      data={articleRecs}
       renderItem={( {item} ) => {
         return (
           <View>
-            <Text style={styles.recTitle}>{item.title}</Text>
+            <Text style={styles.recTitleTwo}>{item.title}</Text>
             <Image
                 style={styles.recImage}
                 source={{uri: item.image}}
@@ -83,7 +26,7 @@ const RecsScreen = () => {
             />
             <View style={styles.buttonRow}>
               <TouchableOpacity>
-                  <Text style={styles.belowAverageButton}>{blurb}</Text>
+                  <Text style={styles.belowAverageButton}>View Article</Text>
               </TouchableOpacity>
               </View>
           </View>

@@ -3,6 +3,7 @@ import { Text, View, Switch, PickerIOS, Alert, FlatList, TouchableOpacity, Butto
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import allTopics from "../components/TopicsArray.js";
+import Carnival from "react-native-carnival";
 
 //Set a ListSub Var in ST for managing email prefs; do a get to check current email status
 
@@ -32,8 +33,6 @@ const getFollowing = async () => {
 getFollowing();
 
 const PreferenceScreen = () => {
-
-  let swapStatus;
 
   const currentTopicSubs = [];
 
@@ -85,6 +84,7 @@ const PreferenceScreen = () => {
     } catch (e) {
       alert(`Something went wrong with storeLTV(): ${e}`);
     }
+    updateSubs(subs);
   };
 
   const removeFollowing = async (topic) => {
@@ -94,6 +94,16 @@ const PreferenceScreen = () => {
     } catch (e) {
       alert(`Something went wrong with storeLTV(): ${e}`);
     }
+    updateSubs(subs);
+  };
+
+  const updateSubs = (value) => {
+    const attrMap = new Carnival.AttributeMap();
+    attrMap.setStringArray("following_topics", value);
+    attrMap.setMergeRule(attrMap.MergeRules.Update);
+    Carnival.setAttributes(attrMap).catch(error => {
+      console.log(`Error setting device attributes: ${error}`);
+    });
   };
 
   const changeStatus = (topic) => {
@@ -126,7 +136,6 @@ const PreferenceScreen = () => {
 
       const userAlertValue = values[0][1];
       const userPushValue = values[1][1];
-      // const userPushValue = values[1][1];
 
       if (userPushValue && userPushValue != "false") {
         currentPushPref = true;
@@ -158,25 +167,23 @@ const PreferenceScreen = () => {
 
   const [currentPushValue, pushToggle] = useState(currentPushPref);
   const [currentAlertValue, alertToggle] = useState(currentAlertPrefs);
-  // const [currentFollowingValue, followingToggle] = useState(currentFollowingPrefs);
 
-  let attrMap = {};
-  // let attrMap = new Carnival.AttributeMap();
+  let prefMap = {};
 
-  attrMap.push_subscribed = currentPushValue;
-  attrMap.alert_prefs = currentAlertValue;
+  prefMap.push_subscribed = currentPushValue;
+  prefMap.alert_prefs = currentAlertValue;
 
   const alertSwitch = (currentPushValue) => {
 
     const newValue = !currentPushValue;
 
-    attrMap.push_subscribed = newValue;
+    prefMap.push_subscribed = newValue;
     pushToggle(newValue);
     storeData("@push_subscribed", (newValue).toString());
 
     let successBlurb;
 
-    if (attrMap.push_subscribed) {
+    if (prefMap.push_subscribed) {
       successBlurb = "You are now subscribed to push alerts."
     }
     else {
@@ -192,16 +199,11 @@ const PreferenceScreen = () => {
         }
       ],
     );
-
-    // attrMap.setBoolean("push_subscribed", value);
-    // Carnival.setAttributes(attrMap).catch(e => {
-      // Handle error
-    // });
   };
 
   const updatePrefs = (value) => {
-    if (value != attrMap.alert_prefs) {
-      attrMap.alert_prefs = value;
+    if (value != prefMap.alert_prefs) {
+      prefMap.alert_prefs = value;
       alertToggle(value);
       storeData("@alert_preferences", (value).toString());
       
@@ -217,10 +219,11 @@ const PreferenceScreen = () => {
       
     };
 
-    // attrMap.setString("alert_preferences", value);
-    // Carnival.setAttributes(attrMap).catch(e => {
-      // Handle error
-    // });
+    const attrMap = new Carnival.AttributeMap();
+    attrMap.setString("alert_preferences", value);
+    Carnival.setAttributes(attrMap).catch(error => {
+      console.log(`Error setting device attributes: ${error}`);
+    });
   };
 
   let pickerStyle;
@@ -238,20 +241,8 @@ const PreferenceScreen = () => {
     listStyle = styles.listStyleHidden;
   };
 
-  // const resetTopics = async () => {
-  //   try {
-  //     await AsyncStorage.setItem("@following_topics", "");
-  //   } catch (e) {
-  //     alert(`Something went wrong with resetTopics(): ${e}`);
-  //   }
-  // };
-
   return (
   <View style={styles.view}>
-    {/* <Button
-      title="Reset"
-      onPress={()=> resetTopics()}
-    /> */}
     <Text style={styles.header}>Your Preference Center</Text>
     <Text style={styles.subhead}><Text style={styles.label}>Current Status:</Text> {currentPushValue ? "Subscribed" : "Unsubscribed"}</Text>
     
@@ -262,7 +253,6 @@ const PreferenceScreen = () => {
         true: "rgb(0, 153, 0)"
       }}
       ios_backgroundColor="rgb(102, 0, 0)"
-      // thumbColor="rgb(102, 0, 0)"
       value={currentPushValue}
       onValueChange={() => alertSwitch(currentPushValue)}
     />
