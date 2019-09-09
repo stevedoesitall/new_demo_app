@@ -23,7 +23,7 @@ const HomeScreen = (props) => {
 
   <View style={styles.view}>
     
-    <Text style={styles.header}>Hello, {userFirstName}!</Text>
+    <Text style={styles.header}>Hello, {userFirstName ? userFirstName : "Friend"}!</Text>
     {/* <Image
       style={styles.logoImage}
       resizeMode="contain"

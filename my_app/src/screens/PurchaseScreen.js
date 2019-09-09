@@ -5,7 +5,9 @@ import PurchaseDetails from "../components/PurchaseComp.js";
 import { itemRecs } from "../components/ItemFile.js";
 import tierMap from "../components/TierMap.js";
 import AsyncStorage from "@react-native-community/async-storage";
+import Carnival from "react-native-carnival";
 
+const purchaseItems = [];
 let userTier;
 let userCart = [];
 
@@ -108,7 +110,7 @@ const PurchaseScreen = () => {
         try {
           await AsyncStorage.setItem("@user_tier", newUserTier);
           if (newTierLevel > currentTierLevel) {
-            alert(`Congratulations! You are now a ${newUserTier} member.`);
+            // alert(`Congratulations! You are now a ${newUserTier} member.`);
             //Add custom event trigger here
           }
         } catch (e) {
@@ -134,6 +136,8 @@ const PurchaseScreen = () => {
                 });
                 if (!cartContents.includes(item.title)) {
                     userCart.push(item);
+                    const purchaseItem = new Carnival.PurchaseItem(qty, item.title, item.price, item.sku, item.url);
+                    purchaseItems.push(purchaseItem);
                     alert(`${item.title} added to your cart.`);
                 }
                 else {
@@ -143,8 +147,8 @@ const PurchaseScreen = () => {
                               alert("No changes made to cart.");
                             }
                             else {
-                            cartItem.qty = item.qty;
-                            alert(`There are now ${item.qty} of ${item.title} in your cart.`);
+                              cartItem.qty = item.qty;
+                              alert(`There are now ${item.qty} of ${item.title} in your cart.`);
                             }
                         }
                     });
@@ -152,6 +156,8 @@ const PurchaseScreen = () => {
                 }
             else {
                 userCart.push(item);
+                const purchaseItem = new Carnival.PurchaseItem(item.qty, item.title, item.sku, item.url);
+                purchaseItems.push(purchaseItem);
                 alert(`${item.title} added to your cart.`);
             }
         let totalPurchaseValue = 0;
@@ -209,11 +215,18 @@ const PurchaseScreen = () => {
             totalItems = totalItems + cartItem.qty;
             totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.price);
           });
-          alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
+          // alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
           clearCart(type);
           storeLTV(totalPurchaseValue);
           cartLengthTicker(userCart.length);
           storeCart();
+
+          const purchase = new Carnival.Purchase(purchaseItems);
+          // Carnival.logPurchase(purchase).then(result => {
+          //   alert(`Success: ${result}`);
+          // }).catch(error => {
+          //   alert(`Error: ${error}`);
+          // });
         }
       };
     
