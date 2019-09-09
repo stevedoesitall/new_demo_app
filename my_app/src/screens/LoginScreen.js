@@ -38,7 +38,7 @@ const LoginScreen = (props) => {
             nav.navigate("Home");
           }}
         >
-          <Text style={styles.textButtonLogin}>Or continue without logging in</Text>
+          <Text style={styles.textButtonLogin}>Or continue without logging in.</Text>
     </TouchableOpacity>
 
   </View>

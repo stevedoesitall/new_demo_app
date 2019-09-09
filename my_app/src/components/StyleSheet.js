@@ -80,14 +80,13 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     messageActions: {
-        marginLeft: 5,
+        marginLeft: 10,
         fontFamily: "Futura",
-        fontSize: 10
+        fontSize: 15
     }, 
     messageImage: {
         height: 100,
-        width: 100,
-        marginBottom: 10
+        width: 100
     },
     messageTextRead: {
         marginBottom: 5,
@@ -116,12 +115,14 @@ const styles = StyleSheet.create({
     messagesRead: {
         borderColor: "black",
         borderWidth: 1,
+        height: 100,
         width: 400,
         backgroundColor: "white"
     },
     messagesUnread: {
         borderColor: "black",
         borderWidth: 1,
+        height: 120,
         width: 400,
         backgroundColor: "rgb(0, 124, 170)"
     },

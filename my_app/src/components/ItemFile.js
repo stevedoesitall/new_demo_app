@@ -5,7 +5,6 @@ const sectionIdMedia = "0af7e114-d038-11e9-b727-002590d1a2f6";
 
 const itemRecs = [];
 const articleRecs = [];
-const messageStream = [];
 
 const getItemRecs = () => {
   Carnival.getRecommendations(sectionIdCommerce).then(function(recs) {
@@ -27,19 +26,7 @@ const getArticleRecs = () => {
   });
 };
 
-const getMessageStream = () => {
-
-  Carnival.getMessages().then(messages => {
-    messages.forEach(message => {
-      messageStream.push(message);
-    });
-  }).catch(error => {
-    console.log(error);
-  });
-};
-
 getItemRecs();
 getArticleRecs();
-getMessageStream();
 
-export { itemRecs, articleRecs, messageStream };
+export { itemRecs, articleRecs };

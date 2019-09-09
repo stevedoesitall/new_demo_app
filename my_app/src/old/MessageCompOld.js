@@ -46,6 +46,7 @@ class MessageDetails extends Component {
                         console.log(error);
                     });
                 console.log(result);
+                getMessageSteam();
               }).catch(error => {
                 alert(error);
             });
@@ -69,13 +70,13 @@ class MessageDetails extends Component {
                             <View style={item.is_read ? styles.messagesRead : styles.messagesUnread}>
                                 <Text style={item.is_read ? styles.messageTitleRead : styles.messageTitleUnread}>{item.title}</Text>
                                 <Text style={item.is_read ? styles.messageTextRead : styles.messageTextUnread}>{item.text}</Text>
-                                {item.card_image_url ?
+                                {/* {item.card_image_url ?
                                 <Image
                                 style={styles.messageImage}
                                 source={{uri: item.card_image_url}}
                                 resizeMode="contain"
                                 /> : null
-                                }
+                                } */}
                             <View style={styles.buttonRow}>
                                 <TouchableOpacity
                                 onPress={() => this.updateMessageScreen("delete", item)}
