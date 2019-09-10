@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import PurchaseDetails from "../components/PurchaseComp.js";
-import { itemRecs } from "../components/ItemFile.js";
+import { itemDetailsArray } from "../components/ItemFile.js";
 import tierMap from "../components/TierMap.js";
 import AsyncStorage from "@react-native-community/async-storage";
 import Carnival from "react-native-carnival";
@@ -110,7 +110,7 @@ const PurchaseScreen = () => {
         try {
           await AsyncStorage.setItem("@user_tier", newUserTier);
           if (newTierLevel > currentTierLevel) {
-            // alert(`Congratulations! You are now a ${newUserTier} member.`);
+            alert(`Congratulations! You are now a ${newUserTier} member.`);
             //Add custom event trigger here
           }
         } catch (e) {
@@ -215,7 +215,7 @@ const PurchaseScreen = () => {
             totalItems = totalItems + cartItem.qty;
             totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.price);
           });
-          // alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
+          alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
           clearCart(type);
           storeLTV(totalPurchaseValue);
           cartLengthTicker(userCart.length);
@@ -272,7 +272,7 @@ const PurchaseScreen = () => {
             keyExtractor={(item => {
                 return item.sku
             })}
-            data={itemRecs}
+            data={itemDetailsArray}
             renderItem={( {item} ) => {
                 return (
                   <View style={styles.view}>

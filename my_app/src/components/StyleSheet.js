@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    activityIndicator: {
+        marginTop: 20
+    },
     divider: {
         color: "black",
         fontSize: 20,
@@ -117,12 +120,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height: 100,
         width: 400,
-        backgroundColor: "white"
+        backgroundColor: "rgb(211,211,211)"
     },
     messagesUnread: {
         borderColor: "black",
         borderWidth: 1,
-        height: 120,
+        height: 100,
         width: 400,
         backgroundColor: "rgb(0, 124, 170)"
     },
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
         color: "rgb(0, 102, 204)",
         fontSize: 20,
         fontFamily: "Futura",
-        marginLeft: 4
+        marginLeft: 10
     },
     textButtonLogin: {
         color: "rgb(0, 124, 170)",

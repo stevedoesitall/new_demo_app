@@ -6,6 +6,7 @@ import Carnival from "react-native-carnival";
 const HomeScreen = (props) => {
 
   const [userFirstName, setFirstName] = useState("Friend");
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const getUserFields = () => { 
     Carnival.getProfileVars().then(profileVars => {
@@ -15,7 +16,17 @@ const HomeScreen = (props) => {
     });
   };
 
+
+  const getUnreadCount = () => {
+    Carnival.getUnreadCount().then(function(count) {
+      setUnreadCount(count);
+    }, function(e){
+      // Handle error
+    });
+  };
+
   getUserFields();
+  getUnreadCount();
 
   const nav = props.navigation;
 
@@ -50,7 +61,7 @@ const HomeScreen = (props) => {
     <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Recs")}
     >
-      <Text style={styles.customButton}>Recommended Articles</Text>
+      <Text style={styles.customButton}>Recommended for You</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={styles.toHome}

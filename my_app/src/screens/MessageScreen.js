@@ -1,22 +1,34 @@
 import React, { useState } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import Carnival from "react-native-carnival";
 
 const MessageScreen = () => {
 
   const [currentMessageStream, setMessageStream] = useState("");
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [animatingState, setAnimatingState] = useState(true);
 
   const getMessageStream = () => {
 
       Carnival.getMessages().then(messages => {
         setMessageStream(messages);
+        setAnimatingState(false);
       }).catch(error => {
           console.log(error);
       });
   };
 
+  const getUnreadCount = () => {
+    Carnival.getUnreadCount().then(function(count) {
+      setUnreadCount(count);
+    }, function(e){
+      // Handle error
+    });
+  };
+
   getMessageStream();
+  getUnreadCount();
 
   const updateMessageScreen = (action, message) => {
     if (action == "delete") {
@@ -31,6 +43,7 @@ const MessageScreen = () => {
         });
     }
     else if (action == "mark_read") {
+        Carnival.presentMessageDetail(message);
         Carnival.markMessageAsRead(message).then(result => {
           Carnival.getMessages().then(messages => {
             setMessageStream(messages);
@@ -41,14 +54,37 @@ const MessageScreen = () => {
             alert(error);
         });
     }
-    else if (action == "full_screen") {
-        Carnival.presentMessageDetail(message);
-    };
 };
 
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Your Message Center</Text>
+        {currentMessageStream.length == 0  && animatingState == false ? 
+            <Text style={styles.subhead}>No messages!</Text>
+        : null}
+
+        {animatingState == true ? 
+            <Text style={styles.subhead}>Retrieving messages, please wait...</Text>
+        : null}
+
+        {animatingState == true ? 
+            <ActivityIndicator
+                animating={animatingState}
+                size="large"
+                style={styles.activityIndicator}
+            />
+        : null}
+    {/* <View style={styles.buttonRow}>
+      <TouchableOpacity
+      >
+        <Text style={styles.textButton}>Mark As Read</Text>
+      </TouchableOpacity>
+      <Text style={styles.textButton}> | </Text>
+      <TouchableOpacity
+      >
+        <Text style={styles.textButton}>Delete</Text>
+      </TouchableOpacity>
+    </View> */}
     <FlatList
       keyExtractor={(item => {
           return item.id
@@ -74,18 +110,10 @@ const MessageScreen = () => {
                   >
                   <Text style={styles.messageActions}>Delete</Text>
                   </TouchableOpacity>
-                  {!item.is_read ? 
-                      <TouchableOpacity
+                  <TouchableOpacity
                       onPress={() => updateMessageScreen("mark_read", item)}
                       >
-                      <Text style={styles.messageActions}>Mark Read</Text>
-                      </TouchableOpacity>
-                  : null
-                  }
-                  <TouchableOpacity
-                      onPress={() => updateMessageScreen("full_screen", item)}
-                      >
-                  <Text style={styles.messageActions}>Full Screen</Text>
+                  <Text style={styles.messageActions}>Read</Text>
                   </TouchableOpacity>
               </View>
               </View>
