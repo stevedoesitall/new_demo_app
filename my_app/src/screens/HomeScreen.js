@@ -43,7 +43,7 @@ const HomeScreen = (props) => {
     <TouchableOpacity style={styles.toHome}
       onPress={() => nav.navigate("Messages")}
     >
-      <Text style={styles.customButton}>Your Message Center</Text>
+      <Text style={styles.customButton}>Your Message Center {unreadCount ? "(" + unreadCount + ")" : null}</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={styles.toHome}

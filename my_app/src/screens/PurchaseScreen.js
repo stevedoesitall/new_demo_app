@@ -222,6 +222,7 @@ const PurchaseScreen = () => {
           storeCart();
 
           const purchase = new Carnival.Purchase(purchaseItems);
+          console.log(purchase);
           // Carnival.logPurchase(purchase).then(result => {
           //   alert(`Success: ${result}`);
           // }).catch(error => {

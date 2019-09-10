@@ -42,11 +42,14 @@ const sectionIdMedia = "0af7e114-d038-11e9-b727-002590d1a2f6";
 
 const itemRecs = [];
 const articleRecs = [];
+const itemURLs = [];
+const articleURLs = [];
 
 const getItemRecs = () => {
   Carnival.getRecommendations(sectionIdCommerce).then(function(recs) {
     recs.forEach(rec => {
       itemRecs.push(rec);
+      itemURLs.push(rec.url);
     });
   }, function(error) {
     console.log(error);
@@ -57,6 +60,7 @@ const getArticleRecs = () => {
   Carnival.getRecommendations(sectionIdMedia).then(function(recs) {
     recs.forEach(rec => {
       articleRecs.push(rec);
+      articleURLs.push(rec.url);
     });
   }, function(error) {
     console.log(error);
@@ -66,4 +70,4 @@ const getArticleRecs = () => {
 getItemRecs();
 getArticleRecs();
 
-export { itemRecs, articleRecs, itemDetailsArray };
+export { itemRecs, articleRecs, itemDetailsArray, sectionIdMedia, sectionIdCommerce, itemURLs, articleURLs };

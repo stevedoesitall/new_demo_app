@@ -85,34 +85,34 @@ const styles = StyleSheet.create({
     messageActions: {
         marginLeft: 10,
         fontFamily: "Futura",
-        fontSize: 15
-    }, 
+        fontSize: 12
+    },
+    unreadText: {
+        alignSelf: "flex-end",
+        color: "white",
+        marginLeft: 10,
+        fontFamily: "Futura",
+        fontSize: 12,
+        backgroundColor: "rgb(255, 128, 0)",
+        borderRadius: 9,
+        textAlign: "center",
+        width: 60
+    },
     messageImage: {
         height: 100,
         width: 100
     },
-    messageTextRead: {
+    messageText: {
         marginBottom: 5,
         fontFamily: "Futura",
-        fontSize: 20,
-        alignSelf: "center"
-    },  
-    messageTextUnread: {
-        marginBottom: 5,
-        fontFamily: "Futura",
-        fontSize: 20,
-        alignSelf: "center"
-    },  
-    messageTitleRead: {
-        marginBottom: 5,
-        fontFamily: "Futura",
-        fontSize: 25,
+        fontSize: 15,
         alignSelf: "center"
     },
-    messageTitleUnread: {
+    messageTitle: {
         marginBottom: 5,
+        marginTop: 5,
         fontFamily: "Futura",
-        fontSize: 25,
+        fontSize: 18,
         alignSelf: "center"
     },
     messagesRead: {
@@ -121,13 +121,6 @@ const styles = StyleSheet.create({
         height: 100,
         width: 400,
         backgroundColor: "rgb(211,211,211)"
-    },
-    messagesUnread: {
-        borderColor: "black",
-        borderWidth: 1,
-        height: 100,
-        width: 400,
-        backgroundColor: "rgb(0, 124, 170)"
     },
     messagesHidden: {
         height: 0,
@@ -223,9 +216,11 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: "rgb(0, 102, 204)",
+        marginLeft: 7
+    },
+    textBlurb: {
         fontSize: 20,
-        fontFamily: "Futura",
-        marginLeft: 10
+        fontFamily: "Futura"
     },
     textButtonLogin: {
         color: "rgb(0, 124, 170)",
