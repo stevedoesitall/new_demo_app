@@ -4,7 +4,14 @@ const itemDetailsArray = [{
   title: "Blue T-Shirt",
   sku: "SKUSHIRT1",
   price: 1599,
-  image: "https://images.freeimages.com/images/large-previews/36d/t-shirt-1426871.jpg",
+  images: {
+    full: {
+      url: "https://images.freeimages.com/images/large-previews/36d/t-shirt-1426871.jpg"
+    },
+    thumb: {
+      url: "https://images.freeimages.com/images/large-previews/36d/t-shirt-1426871.jpg"
+    }
+  },
   tags: ["unisex", "color-blue", "material-cotton", "category-shirts", "subtype-tshirt", "price-11-20"],
   url: "http://example.com/blue_tshirt",
   vars: {
@@ -15,7 +22,14 @@ const itemDetailsArray = [{
   title: "Black Chelsea Boots",
   sku: "SKUBOOTS2",
   price: 19999,
-  image: "https://images.freeimages.com/images/large-previews/990/boots-2-1426166.jpg",
+  images: {
+    full: {
+      url: "https://images.freeimages.com/images/large-previews/990/boots-2-1426166.jpg"
+    },
+    thumb: {
+      url: "https://images.freeimages.com/images/large-previews/990/boots-2-1426166.jpg"
+    }
+  },
   tags: ["mens", "color-black", "material-leather", "category-footwear", "subtype-boots", "price-151-200"],
   url: "http://example.com/black_chelsea_boots",
   vars: {
@@ -26,7 +40,14 @@ const itemDetailsArray = [{
   title: "Red Flats",
   sku: "SKUFLATS3",
   price: 12199,
-  image: "https://images.freeimages.com/images/large-previews/69b/shoes-1422843.jpg",
+  images: {
+    full: {
+      url: "https://images.freeimages.com/images/large-previews/69b/shoes-1422843.jpg"
+    },
+    thumb: {
+      url: "https://images.freeimages.com/images/large-previews/69b/shoes-1422843.jpg"
+    },
+  },
   tags: ["womens", "color-red", "material-leather", "category-footwear", "subtype-flats", "price-101-150"],
   url: "http://example.com/red_flats",
   vars: {

@@ -168,8 +168,12 @@ const PurchaseScreen = () => {
 
         userCart.forEach(cartItem => {
           const abandonedItem = new Carnival.PurchaseItem(cartItem.qty, cartItem.title, cartItem.price, cartItem.sku, cartItem.url);
+
+          abandonedItem.setTags(cartItem.tags);
+          abandonedItem.setImages(cartItem.images);
+          abandonedItem.setVars(cartItem.vars);
+
           abandonedItems.push(abandonedItem);
-          
         });
 
         const abandoned = new Carnival.Purchase(abandonedItems);
@@ -222,12 +226,19 @@ const PurchaseScreen = () => {
 
           let totalItems = 0;
           let totalPurchaseValue = 0;
+
+          const purchaseItems = [];
+
           userCart.forEach(cartItem => {
             totalItems = totalItems + cartItem.qty;
             totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.price);
 
-            const purchaseItems = [];
             const purchaseItem = new Carnival.PurchaseItem(cartItem.qty, cartItem.title, cartItem.price, cartItem.sku, cartItem.url);
+
+            purchaseItem.setTags(cartItem.tags);
+            purchaseItem.setImages(cartItem.images);
+            purchaseItem.setVars(cartItem.vars);
+
             purchaseItems.push(purchaseItem);
             
           });
@@ -239,6 +250,9 @@ const PurchaseScreen = () => {
           storeCart();
 
           const purchase = new Carnival.Purchase(purchaseItems);
+
+          purchase.setVars({st_cost: totalPurchaseValue});
+
           Carnival.logPurchase(purchase).then(result => {
             // alert(`Success: ${result}`);
           }).catch(error => {
@@ -295,7 +309,7 @@ const PurchaseScreen = () => {
                   <View style={styles.view}>
                       <PurchaseDetails
                           title={item.title}
-                          image={item.image}
+                          image={item.images.thumb.url}
                           price={item.price}
                           updateFunc={(qty) => updateCart(qty, item)}
                       />
