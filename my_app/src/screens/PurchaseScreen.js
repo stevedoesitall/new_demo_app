@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, TouchableOpacity, Button } from "react-native";
 import styles from "../components/StyleSheet.js";
 import PurchaseDetails from "../components/PurchaseComp.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
@@ -7,7 +7,6 @@ import tierMap from "../components/TierMap.js";
 import AsyncStorage from "@react-native-community/async-storage";
 import Carnival from "react-native-carnival";
 
-const purchaseItems = [];
 let userTier;
 let userCart = [];
 
@@ -136,8 +135,6 @@ const PurchaseScreen = () => {
                 });
                 if (!cartContents.includes(item.title)) {
                     userCart.push(item);
-                    const purchaseItem = new Carnival.PurchaseItem(qty, item.title, item.price, item.sku, item.url);
-                    purchaseItems.push(purchaseItem);
                     alert(`${item.title} added to your cart.`);
                 }
                 else {
@@ -156,8 +153,6 @@ const PurchaseScreen = () => {
                 }
             else {
                 userCart.push(item);
-                const purchaseItem = new Carnival.PurchaseItem(item.qty, item.title, item.sku, item.url);
-                purchaseItems.push(purchaseItem);
                 alert(`${item.title} added to your cart.`);
             }
         let totalPurchaseValue = 0;
@@ -168,6 +163,22 @@ const PurchaseScreen = () => {
         cartLengthTicker(userCart.length);
         storeCart();
         }
+
+        const abandonedItems = [];
+
+        userCart.forEach(cartItem => {
+          const abandonedItem = new Carnival.PurchaseItem(cartItem.qty, cartItem.title, cartItem.price, cartItem.sku, cartItem.url);
+          abandonedItems.push(abandonedItem);
+          
+        });
+
+        const abandoned = new Carnival.Purchase(abandonedItems);
+        Carnival.logAbandonedCart(abandoned).then(result => {
+          // alert(`Success: ${result}`);
+        }).catch(error => {
+          // alert(`Error: ${error}`);
+        });
+
       };
     
       const removeFromCart = (item, type) => {
@@ -214,7 +225,13 @@ const PurchaseScreen = () => {
           userCart.forEach(cartItem => {
             totalItems = totalItems + cartItem.qty;
             totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.price);
+
+            const purchaseItems = [];
+            const purchaseItem = new Carnival.PurchaseItem(cartItem.qty, cartItem.title, cartItem.price, cartItem.sku, cartItem.url);
+            purchaseItems.push(purchaseItem);
+            
           });
+
           alert(`You purchased ${totalItems} total item${totalItems > 1 ? "s" : ""} for $${totalPurchaseValue/100}.`);
           clearCart(type);
           storeLTV(totalPurchaseValue);
@@ -222,12 +239,11 @@ const PurchaseScreen = () => {
           storeCart();
 
           const purchase = new Carnival.Purchase(purchaseItems);
-          console.log(purchase);
-          // Carnival.logPurchase(purchase).then(result => {
-          //   alert(`Success: ${result}`);
-          // }).catch(error => {
-          //   alert(`Error: ${error}`);
-          // });
+          Carnival.logPurchase(purchase).then(result => {
+            // alert(`Success: ${result}`);
+          }).catch(error => {
+            // alert(`Error: ${error}`);
+          });
         }
       };
     
@@ -248,6 +264,10 @@ const PurchaseScreen = () => {
 
     return (
         <View style={styles.view}>
+        <Button
+          title="Purchase"
+          onPress={() => fakePurchase()}
+        />
         <Text style={styles.header}>Make a Purchase</Text>
         <Text style={styles.subhead}>
           <Text style={styles.label}>Unique Products in Cart: </Text> 
