@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, FlatList, TouchableOpacity, Button } from "react-native";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "../components/StyleSheet.js";
 import PurchaseDetails from "../components/PurchaseComp.js";
 import { itemDetailsArray } from "../components/ItemFile.js";
@@ -264,10 +264,6 @@ const PurchaseScreen = () => {
 
     return (
         <View style={styles.view}>
-        <Button
-          title="Purchase"
-          onPress={() => fakePurchase()}
-        />
         <Text style={styles.header}>Make a Purchase</Text>
         <Text style={styles.subhead}>
           <Text style={styles.label}>Unique Products in Cart: </Text> 
