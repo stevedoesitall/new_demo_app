@@ -67,6 +67,7 @@
 		C3440CE723230684006A66A6 /* RNCarnival.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNCarnival.m; path = "../node_modules/react-native-carnival/ios/RNCarnival.m"; sourceTree = "<group>"; };
 		C3440CE823230684006A66A6 /* RNCarnivalBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNCarnivalBridge.h; path = "../node_modules/react-native-carnival/ios/RNCarnivalBridge.h"; sourceTree = "<group>"; };
 		C3440CE923230685006A66A6 /* RNCarnival.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNCarnival.h; path = "../node_modules/react-native-carnival/ios/RNCarnival.h"; sourceTree = "<group>"; };
+		C35FB5B323297AAB008F2EA8 /* my_app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = my_app.entitlements; path = my_app/my_app.entitlements; sourceTree = "<group>"; };
 		C4E9236F4E084636950FBCC1 /* libPods-my_appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-my_appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA2775F9516D15B9DD50C0A /* Pods-my_app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-my_app.debug.xcconfig"; path = "Target Support Files/Pods-my_app/Pods-my_app.debug.xcconfig"; sourceTree = "<group>"; };
 		D3585F2E5C5DA731ECFF1D59 /* Pods-my_app-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-my_app-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-my_app-tvOSTests/Pods-my_app-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		13B07FAE1A68108700A75B9A /* my_app */ = {
 			isa = PBXGroup;
 			children = (
+				C35FB5B323297AAB008F2EA8 /* my_app.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -317,10 +319,17 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 937EK6Y4ZB;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 937EK6Y4ZB;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -686,6 +695,7 @@
 			baseConfigurationReference = 6289D72C8AE762D87971A2BC /* Pods-my_appTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 937EK6Y4ZB;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -712,6 +722,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 937EK6Y4ZB;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = my_appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -733,6 +744,9 @@
 			baseConfigurationReference = CAA2775F9516D15B9DD50C0A /* Pods-my_app.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = my_app/my_app.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 937EK6Y4ZB;
@@ -744,8 +758,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stevedoesitall.sailthru-demo";
 				PRODUCT_NAME = my_app;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -755,6 +770,9 @@
 			baseConfigurationReference = 905C8AD4FF29374DF3E87083 /* Pods-my_app.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = my_app/my_app.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 937EK6Y4ZB;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -765,8 +783,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stevedoesitall.sailthru-demo";
 				PRODUCT_NAME = my_app;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
