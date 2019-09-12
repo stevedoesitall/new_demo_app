@@ -181,6 +181,12 @@ const PreferenceScreen = () => {
     pushToggle(newValue);
     storeData("@push_subscribed", (newValue).toString());
 
+    const attrMap = new Carnival.AttributeMap();
+    attrMap.setBoolean("push_marketing_subscribed", newValue);
+    Carnival.setAttributes(attrMap).catch(error => {
+      console.log(`Error setting device attributes: ${error}`);
+    });
+
     let successBlurb;
 
     if (prefMap.push_subscribed) {
