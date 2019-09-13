@@ -1,11 +1,21 @@
-import React, { useState } from "react";
-import { Text, View, TouchableOpacity, TextInput, Keyboard } from "react-native";
+import React, { useState, Component } from "react";
+import { Text, View, TouchableOpacity, TextInput, Keyboard, Linking } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import getDate from "../components/DateGenerator.js";
 import { Base64 } from "js-base64";
 import Carnival from "react-native-carnival";
- 
+
+class LinksComponent extends Component {
+  componentDidMount() {
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        alert(url);
+      }
+    }).catch(error => alert('An error occurred', error));
+  }
+};
+
 const LoginScreen = (props) => {
 
   const nav = props.navigation;
@@ -113,4 +123,4 @@ const emailValidator = (nav, email) => {
   nav.navigate("Home");
 };
 
-export default LoginScreen;
+export { LoginScreen, LinksComponent };

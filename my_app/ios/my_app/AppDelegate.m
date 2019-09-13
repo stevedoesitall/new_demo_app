@@ -9,6 +9,7 @@
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
+#import <React/RCTLinkingManager.h>
 #import <React/RCTRootView.h>
 #if RCT_DEV
   #import <React/RCTDevLoadingView.h>
@@ -50,6 +51,34 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+ restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+{
+  if ([userActivity webpageURL] != nil) {
+    NSURL *routingURL = nil;
+    NSURL *incomingURL = [userActivity webpageURL];
+    if ([[incomingURL host] isEqualToString:@"link.stevedoesitall.com"]) {
+      routingURL = [Carnival handleSailthruLink:incomingURL];
+    } else {
+      routingURL = incomingURL;
+    }
+    
+    // set decoded link here to provide to React Native
+    userActivity.webpageURL = routingURL;
+  }
+  // pass to React Native Linking Manager
+  return [RCTLinkingManager application:application
+          continueUserActivity:userActivity
+          restorationHandler:restorationHandler];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
