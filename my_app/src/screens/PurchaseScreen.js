@@ -206,6 +206,14 @@ const PurchaseScreen = () => {
             else if (type == "clear_cart") {
               alert("Your cart has been emptied.");
             }
+            if (userCart.length == 0) {
+              const emptyCart = new Carnival.Purchase([]);
+              Carnival.logAbandonedCart(emptyCart).then(result => {
+                // alert(`Success: ${result}`);
+              }).catch(error => {
+                // alert(`Error: ${error}`);
+              });
+            }
           }
           else {
             alert(`${item.title} isn't in your cart.`);
@@ -293,6 +301,12 @@ const PurchaseScreen = () => {
         else {
           alert("There's nothing in your cart!");
         }
+        const emptyCart = new Carnival.Purchase([]);
+        Carnival.logAbandonedCart(emptyCart).then(result => {
+          // alert(`Success: ${result}`);
+        }).catch(error => {
+          // alert(`Error: ${error}`);
+        });
       };
 
     return (
