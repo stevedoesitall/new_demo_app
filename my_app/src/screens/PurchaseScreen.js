@@ -266,11 +266,17 @@ const PurchaseScreen = () => {
 
           purchase.setVars({st_cost: totalPurchaseValue});
 
+
           Carnival.logPurchase(purchase).then(result => {
             // alert(`Success: ${result}`);
           }).catch(error => {
             // alert(`Error: ${error}`);
           });
+
+          const eventName = "AppPurchase";
+          const eventVars = {};
+          Carnival.logEvent(eventName, eventVars);
+          
         }
       };
     
