@@ -49,6 +49,9 @@ const MessageScreen = () => {
   return (
   <View style={styles.view}>
     <Text style={styles.header}>Your Message Center</Text>
+    {currentMessageStream.length > 0 ? null : 
+      <Text style={styles.subhead}>You're all caught up!</Text>
+    }
     <FlatList
       keyExtractor={(item => {
           return item.id

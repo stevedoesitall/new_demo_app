@@ -115,6 +115,13 @@ const PurchaseScreen = () => {
         } catch (e) {
           alert(`Something went wrong with storeCart(): ${e}`);
         }
+
+        const attrMap = new Carnival.AttributeMap();
+        attrMap.setString("user_tier", newUserTier);
+        attrMap.setInteger("total_points", currentLTV);
+        Carnival.setAttributes(attrMap).catch(error => {
+          console.log(`Error setting device attributes: ${error}`);
+        });
       };
     
       const [currentCartLength, cartLengthTicker] = useState(0);
@@ -216,7 +223,7 @@ const PurchaseScreen = () => {
         storeCart();
       }; 
     
-      const purchase = () => {
+      const submitPurchase = () => {
         if (userCart.length == 0) {
           alert("You can't checkout with an empty cart.");
           return false;
@@ -248,6 +255,12 @@ const PurchaseScreen = () => {
           storeLTV(totalPurchaseValue);
           cartLengthTicker(userCart.length);
           storeCart();
+
+          const attrMap = new Carnival.AttributeMap();
+          attrMap.setDate("last_app_purchase_date", new Date());
+          Carnival.setAttributes(attrMap).catch(error => {
+            console.log(`Error setting device attributes: ${error}`);
+          });
 
           const purchase = new Carnival.Purchase(purchaseItems);
 
@@ -287,7 +300,7 @@ const PurchaseScreen = () => {
             ${(currentCartValue/100).toFixed(2)}</Text>
         <TouchableOpacity
           onPress={() => {
-            purchase();
+            submitPurchase();
           }}
         >
         <Text style={styles.customButton}>Complete Your Purchase</Text>
