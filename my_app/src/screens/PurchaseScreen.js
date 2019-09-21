@@ -297,16 +297,16 @@ const PurchaseScreen = () => {
           userCart.forEach(item => {
             removeFromCart(item, type);
           });
+          const emptyCart = new Carnival.Purchase([]);
+          Carnival.logAbandonedCart(emptyCart).then(result => {
+            // alert(`Success: ${result}`);
+          }).catch(error => {
+            // alert(`Error: ${error}`);
+          });
         }
         else {
           alert("There's nothing in your cart!");
         }
-        const emptyCart = new Carnival.Purchase([]);
-        Carnival.logAbandonedCart(emptyCart).then(result => {
-          // alert(`Success: ${result}`);
-        }).catch(error => {
-          // alert(`Error: ${error}`);
-        });
       };
 
     return (
