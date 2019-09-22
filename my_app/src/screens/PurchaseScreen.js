@@ -249,10 +249,12 @@ const PurchaseScreen = () => {
             totalPurchaseValue = totalPurchaseValue + (cartItem.qty * cartItem.price);
 
             const purchaseItem = new Carnival.PurchaseItem(cartItem.qty, cartItem.title, cartItem.price, cartItem.sku, cartItem.url);
+            const testID = "18123599.1";
 
             purchaseItem.setTags(cartItem.tags);
             purchaseItem.setImages(cartItem.images);
             purchaseItem.setVars(cartItem.vars);
+            // purchaseItem.setMessageId(testID);
 
             purchaseItems.push(purchaseItem);
             
