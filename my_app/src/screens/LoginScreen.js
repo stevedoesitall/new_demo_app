@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, TextInput, Keyboard } from "react-native";
+import { Text, View, TouchableOpacity, TextInput, Keyboard, Linking } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "../components/StyleSheet.js";
 import getDate from "../components/DateGenerator.js";

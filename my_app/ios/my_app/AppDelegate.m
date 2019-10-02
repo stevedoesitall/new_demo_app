@@ -50,6 +50,11 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  NSURL *url = [NSURL URLWithString:@"myapp://test"];
+  [[UIApplication sharedApplication] openURL:url];
+  
+  
   return YES;
 }
 
@@ -57,29 +62,36 @@
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
+  
+  //NSLog([url absoluteString]);
+  
+//  UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"You clicked on a link" message:[url absoluteString] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+//  [av show];
+
   return [RCTLinkingManager application:application openURL:url options:options];
 }
 
-- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
- restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
-{
-  if ([userActivity webpageURL] != nil) {
-    NSURL *routingURL = nil;
-    NSURL *incomingURL = [userActivity webpageURL];
-    if ([[incomingURL host] isEqualToString:@"link.stevedoesitall.com"]) {
-      routingURL = [Carnival handleSailthruLink:incomingURL];
-    } else {
-      routingURL = incomingURL;
-    }
-    
-    // set decoded link here to provide to React Native
-    userActivity.webpageURL = routingURL;
-  }
-  // pass to React Native Linking Manager
-  return [RCTLinkingManager application:application
-          continueUserActivity:userActivity
-          restorationHandler:restorationHandler];
-}
+
+//- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+// restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+//{
+//  if ([userActivity webpageURL] != nil) {
+//    NSURL *routingURL = nil;
+//    NSURL *incomingURL = [userActivity webpageURL];
+//    if ([[incomingURL host] isEqualToString:@"link.stevedoesitall.com"]) {
+//      routingURL = [Carnival handleSailthruLink:incomingURL];
+//    } else {
+//      routingURL = incomingURL;
+//    }
+//
+//    // set decoded link here to provide to React Native
+//    userActivity.webpageURL = routingURL;
+//  }
+//  // pass to React Native Linking Manager
+//  return [RCTLinkingManager application:application
+//          continueUserActivity:userActivity
+//          restorationHandler:restorationHandler];
+//}
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
