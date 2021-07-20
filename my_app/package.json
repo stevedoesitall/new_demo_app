@@ -11,7 +11,7 @@
     "@react-native-community/async-storage": "^1.6.1",
     "js-base64": "^2.5.1",
     "react": "16.8.6",
-    "react-native": "0.60.5",
+    "react-native": "0.62.3",
     "react-native-carnival": "^3.2.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-navigation": "^3.12.0",
